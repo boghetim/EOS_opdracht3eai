@@ -254,23 +254,18 @@ static void vTimerCallback( TimerHandle_t pxTimer )
 	vTaskDelete( xTxTask );
 }
 
-void set_audio_parameters(unsigned int freq, unsigned int signal_type, unsigned int adsr_envelope)
-{
-    // Hier kun je de instellingen naar de audiocodec of synthesizer doorsturen
-    // Implementeer de logica om de frequentie, signaaltype, ADSR-envelope, enzovoort in te stellen
-}
 
-
-void audio_test(void)
-{
+void audio_test(){
 	unsigned long u32DataL, u32DataR;
 	unsigned long u32Temp;
 	// Stel de audioparameters in
-	set_audio_parameters(440, 1, 100);
-
 	float time = 0.0;
-	float sample_rate = 44100.0;  // Voorbeeld: 44.1 kHz sample rate
+	unsigned int frequency=25;
+	unsigned int signal_type=0;
+	float amplitude=0.5;
+	float audio_sample;
 
+	float sample_rate = 44100.0;  // Voorbeeld: 44.1 kHz sample rate
 
 	while (1)
 	{
@@ -281,24 +276,51 @@ void audio_test(void)
 
 		Xil_Out32(I2S_STATUS_REG, 0x00000001); //Clear data rdy bit
 
-		// Roep generate_sine_wave aan
-		float sine_wave = sin(2 * M_PI * 440.0 * time);
+		//welke wave signal
+		if (signal_type == 0){
+					// Sinusgolf
+					audio_sample = sin(2 * M_PI * frequency * time);
+				}
+		else if (signal_type == 1) {
+					// Driehoekgolf
+					float period = 1.0 / frequency;
+					float phase = fmod(time, period) / period;
+				    if (phase < 0.25) {
+				        audio_sample = (4.0 * amplitude * phase);
+				    }
+				    else if (phase < 0.75) {
+				        audio_sample = amplitude - (4.0 * amplitude * (phase - 0.25));
+				    }
+				    else {
+				        audio_sample = -amplitude + (4.0 * amplitude * (phase - 0.75));
+				    }
+				}
+		else if (signal_type == 2) {
+					// Zaagtandgolf
+				    float period = 1.0 / frequency;
+				    float phase = fmod(time, period) / period;
+				    audio_sample = (2.0 * amplitude * phase) - amplitude;
+				}
+		else if (signal_type == 3) {
+					// Vierkantsgolf (voorbeeld, implementeer zoals nodig)
+					float period = 1.0 / frequency;
+				    float phase = fmod(time, period) / period;
+				    audio_sample = (phase < 0.5) ? amplitude : -amplitude;
+				}
 
-		u32DataL = (unsigned long)(sine_wave * 32767.0);
+
+		u32DataL = (unsigned long)(audio_sample * 32767.0);
 		u32DataR = u32DataL;  // Voorbeeld: mono signaal
 
 		time += 1.0 / sample_rate;
 
 		Xil_Out32(I2S_DATA_TX_L_REG, u32DataL);
 		Xil_Out32(I2S_DATA_TX_R_REG, u32DataR);
-
-
 	}
 }
 
 unsigned char IicConfig(unsigned int DeviceIdPS)
 {
-
 	XIicPs_Config *Config;
 	int Status;
 
