@@ -1,0 +1,8 @@
+11:13:12 **** Clean-only build of configuration Debug for project audio_app_system ****
+make clean 
+rm -rf ./_sds
+rm -rf package
+rm -f system.bif
+
+11:13:12 Build Finished (took 159ms)
+

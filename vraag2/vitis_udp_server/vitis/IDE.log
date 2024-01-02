@@ -171,3 +171,12 @@ Reason: No Platforms Found.
 12:05:06 INFO  : Result from executing command 'getProjects': design_1_wrapper
 12:05:06 INFO  : Result from executing command 'getPlatforms': 
 12:05:06 INFO  : Checking for BSP changes to sync application flags for project 'vraag2_app'...
+15:24:40 DEBUG : Logs will be stored at 'C:/Users/boghe/EOS_opdracht3eai/vraag2/vitis_udp_server/vitis/IDE.log'.
+15:24:40 INFO  : Launching XSCT server: xsct.bat -n  -interactive C:\Users\boghe\EOS_opdracht3eai\vraag2\vitis_udp_server\vitis\temp_xsdb_launch_script.tcl
+15:24:43 INFO  : XSCT server has started successfully.
+15:24:43 INFO  : Successfully done setting XSCT server connection channel  
+15:24:43 INFO  : plnx-install-location is set to ''
+15:24:43 INFO  : Successfully done setting workspace for the tool. 
+15:24:45 INFO  : Platform repository initialization has completed.
+15:24:45 INFO  : Registering command handlers for Vitis TCF services
+15:24:48 INFO  : Successfully done query RDI_DATADIR 
