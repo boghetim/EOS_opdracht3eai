@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<sdkproject:SdkProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdkproject="http://www.xilinx.com/sdkproject" name="audio_app" location="C:/Users/boghe/EOS_opdracht3eai/vraag2/vitis_audio/vitis/audio_app" platform="C:/Users/boghe/EOS_opdracht3eai/vraag2/vitis_audio/vitis/design_1_wrapper/export/design_1_wrapper/design_1_wrapper.xpfm" platformUID="xilinx:pynq-z2::0.0(custom)" systemProject="audio_app_system" sysConfig="design_1_wrapper" runtime="cpp" cpu="freertos10_xilinx_ps7_cortexa9_0" cpuInstance="ps7_cortexa9_0" os="freertos10_xilinx" mssSignature="6ae1d0b4400544640a4179af801e5267">
-  <configuration name="Release" id="xilinx.gnu.armv7.exe.release.420148433" dirty="true">
-    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
-  </configuration>
-  <template appTemplateName="freertos_hello_world" hasBspSettings="true"/>
-</sdkproject:SdkProject>

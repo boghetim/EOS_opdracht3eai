@@ -58,9 +58,20 @@ static TaskHandle_t xAudioTask;
 
 static QueueHandle_t xQueue = NULL;
 static TimerHandle_t xTimer = NULL;
-char HWstring[15] = "Hello World";
+char HWstring[15] = "beware of noise";
 long RxtaskCntr = 0;
 int status;
+float time = 0.0;
+/* audio parameters  */
+unsigned int frequency=75;
+unsigned int signal_type=0;
+float amplitude=0.3;
+// ADSR instellingen
+float attack_time = 0.1;
+float decay_time = 0.3;
+float sustain_level = 0.7;
+float release_time = 0.3;
+float adsr_envelope = 1;
 
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
 #define QUEUE_BUFFER_SIZE		100
@@ -115,7 +126,7 @@ int main( void )
 	xTaskCreate( prvRxTask,( const char * ) "GB",configMINIMAL_STACK_SIZE,NULL,tskIDLE_PRIORITY + 1,&xRxTask );
 
 
-	 xTaskCreate(audio_test, "AudioTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 2, &xAudioTask);
+	xTaskCreate(audio_test, "AudioTask", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 2, &xAudioTask);
 
 
 	/* Create the queue used by the tasks.  The Rx task has a higher priority
@@ -184,7 +195,6 @@ int main( void )
 	/* Start the tasks and timer running. */
 	vTaskStartScheduler();
 
-
 	for( ;; );
 }
 
@@ -192,12 +202,12 @@ int main( void )
 /*-----------------------------------------------------------*/
 static void prvTxTask( void *pvParameters )
 {
-const TickType_t x1second = pdMS_TO_TICKS( DELAY_1_SECOND );
+
 
 	for( ;; )
 	{
-		/* Delay for 1 second. */
-		vTaskDelay( x1second );
+		/* Delay for 0.2 second. */
+		vTaskDelay(pdMS_TO_TICKS(200));
 
 		/* Send the next value on the queue.  The queue should always be
 		empty at this point so a block time of 0 is used. */
@@ -221,7 +231,7 @@ char Recdstring[15] = "";
 
 		/* Print the received data. */
 		xil_printf( "Rx task received string from Tx task: %s\r\n", Recdstring );
-		RxtaskCntr++;
+		RxtaskCntr++;;
 	}
 }
 
@@ -243,9 +253,9 @@ static void vTimerCallback( TimerHandle_t pxTimer )
 	 The timer expires after 10 seconds. We expect the RxtaskCntr to at least
 	 have a value of 9 (TIMER_CHECK_THRESHOLD) when the timer expires. */
 	if (RxtaskCntr >= TIMER_CHECK_THRESHOLD) {
-		xil_printf("Successfully ran FreeRTOS Hello World Example");
+		xil_printf("Successfully been warned for noise disturbance");
 		XGpio_DiscreteSet(&Gpio0, 1, 0x1);
-		XGpio_DiscreteSet(&Gpio1, 2, 0x1);
+
 	} else {
 		xil_printf("FreeRTOS Hello World Example FAILED");
 	}
@@ -254,60 +264,94 @@ static void vTimerCallback( TimerHandle_t pxTimer )
 	vTaskDelete( xTxTask );
 }
 
+/*-----------------------------------------------------------*/
+void calculate_adsr_envelope() {
+    if (time < attack_time) {
+        // Attack
+        adsr_envelope = time / attack_time;
+    } else if (time < (attack_time + decay_time)) {
+        // Decay
+        adsr_envelope = 1.0 - (1.0 - sustain_level) * ((time - attack_time) / decay_time);
+    } else {
+        // Sustain (constant)
+        adsr_envelope = sustain_level;
 
+        // Release
+        if (release_time > 0 && time > (attack_time + decay_time)) {
+            adsr_envelope *= 1.0 - ((time - attack_time - decay_time) / release_time);
+        }
+    }
+}
+
+/*-----------------------------------------------------------*/
 void audio_test(){
 	unsigned long u32DataL, u32DataR;
 	unsigned long u32Temp;
-	// Stel de audioparameters in
-	float time = 0.0;
-	unsigned int frequency=25;
-	unsigned int signal_type=0;
-	float amplitude=0.5;
-	float audio_sample;
-
 	float sample_rate = 44100.0;  // Voorbeeld: 44.1 kHz sample rate
+	float audio_sample=0;
+	int i =0;
+	vTaskDelay(pdMS_TO_TICKS(4000));
 
 	while (1)
 	{
-		do //wait for RX data to become available
-		{
+		do{ //wait for RX data to become available
+
 			u32Temp = Xil_In32(I2S_STATUS_REG);
 		} while ( u32Temp == 0);
 
 		Xil_Out32(I2S_STATUS_REG, 0x00000001); //Clear data rdy bit
 
+		calculate_adsr_envelope();
+
 		//welke wave signal
 		if (signal_type == 0){
-					// Sinusgolf
-					audio_sample = sin(2 * M_PI * frequency * time);
-				}
+			// Sinusgolf
+			XGpio_DiscreteSet(&Gpio1, 2, 0x1);
+			audio_sample = sin(2 * M_PI * frequency * time);
+		}
 		else if (signal_type == 1) {
-					// Driehoekgolf
-					float period = 1.0 / frequency;
-					float phase = fmod(time, period) / period;
-				    if (phase < 0.25) {
-				        audio_sample = (4.0 * amplitude * phase);
-				    }
-				    else if (phase < 0.75) {
-				        audio_sample = amplitude - (4.0 * amplitude * (phase - 0.25));
-				    }
-				    else {
-				        audio_sample = -amplitude + (4.0 * amplitude * (phase - 0.75));
-				    }
-				}
+		    // Driehoekgolf
+			XGpio_DiscreteSet(&Gpio1, 2, 0x2);
+			float period = 1.0 / frequency;
+			float phase = fmod(time, period) / period;
+			audio_sample = 2.0 * (fabs(phase - 0.5) - 0.25);
+		}
 		else if (signal_type == 2) {
-					// Zaagtandgolf
-				    float period = 1.0 / frequency;
-				    float phase = fmod(time, period) / period;
-				    audio_sample = (2.0 * amplitude * phase) - amplitude;
-				}
+		    // Zaagtandgolf
+			XGpio_DiscreteSet(&Gpio1, 2, 0x4);
+		    float period = 1.0 / frequency;
+		    float phase = fmod(time, period) / period;
+			if (phase < attack_time) {
+				audio_sample = (2.0 * amplitude * phase / attack_time) - amplitude;
+			}
+			else {
+				audio_sample = amplitude * (1.0 - (2.0 * (phase - attack_time) / (1.0 - attack_time)));
+			}
+		}
 		else if (signal_type == 3) {
-					// Vierkantsgolf (voorbeeld, implementeer zoals nodig)
-					float period = 1.0 / frequency;
-				    float phase = fmod(time, period) / period;
-				    audio_sample = (phase < 0.5) ? amplitude : -amplitude;
-				}
+		    // Vierkantsgolf
+			XGpio_DiscreteSet(&Gpio1, 2, 0x8);
+		    float period = 1.0 / frequency;
+		    float phase = fmod(time, period) / period;
+		    audio_sample = (phase < 0.5) ? amplitude : -amplitude;
+		}
 
+		i++;
+		if (i>1000000)
+		{
+			signal_type = 1;
+		}
+		if (i>2000000)
+		{
+			signal_type = 2;
+		}
+		if (i>3000000)
+		{
+			signal_type = 3;
+		}
+
+
+		audio_sample *= adsr_envelope;
 
 		u32DataL = (unsigned long)(audio_sample * 32767.0);
 		u32DataR = u32DataL;  // Voorbeeld: mono signaal
@@ -316,9 +360,11 @@ void audio_test(){
 
 		Xil_Out32(I2S_DATA_TX_L_REG, u32DataL);
 		Xil_Out32(I2S_DATA_TX_R_REG, u32DataR);
+		XGpio_DiscreteClear(&Gpio1, 2, 0xF);
 	}
 }
 
+/*-----------------------------------------------------------*/
 unsigned char IicConfig(unsigned int DeviceIdPS)
 {
 	XIicPs_Config *Config;
@@ -342,7 +388,7 @@ unsigned char IicConfig(unsigned int DeviceIdPS)
 	return XST_SUCCESS;
 }
 
-
+/*-----------------------------------------------------------*/
 void AudioPllConfig() {
 
 	unsigned char u8TxData[8], u8RxData[6];
@@ -378,6 +424,7 @@ void AudioPllConfig() {
 	AudioWriteToReg(R0_CLOCK_CONTROL, 0x0F);//COREN
 }
 
+/*-----------------------------------------------------------*/
 void AudioWriteToReg(unsigned char u8RegAddr, unsigned char u8Data) {
 
 	unsigned char u8TxData[3];
@@ -390,6 +437,7 @@ void AudioWriteToReg(unsigned char u8RegAddr, unsigned char u8Data) {
 	while(XIicPs_BusIsBusy(&Iic));
 }
 
+/*-----------------------------------------------------------*/
 void AudioConfigureJacks()
 {
 	AudioWriteToReg(R4_RECORD_MIXER_LEFT_CONTROL_0, 0x01); //enable mixer 1
@@ -417,13 +465,7 @@ void AudioConfigureJacks()
 	AudioWriteToReg(R66_CLOCK_ENABLE_1, 0x03); //Enable rest of clocks
 }
 
-/******************************************************************************
- * Configures Line-In input, ADC's, DAC's, Line-Out and HP-Out.
- *
- * @param   none.
- *
- * @return	none.
- *****************************************************************************/
+/*-----------------------------------------------------------*/
 void LineinLineoutConfig() {
 
 	AudioWriteToReg(R17_CONVERTER_CONTROL_0, 0x06);//96 kHz
