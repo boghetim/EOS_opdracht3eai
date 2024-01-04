@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sdkproject:SdkProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdkproject="http://www.xilinx.com/sdkproject" name="HW_EOS_app" location="C:/Users/brent/Desktop/PXLocal/EOS/project_1/vitis/HW_EOS_app" platform="C:/Users/brent/Desktop/PXLocal/EOS/project_1/vitis/HW_EOS_export/export/HW_EOS_export/HW_EOS_export.xpfm" platformUID="xilinx:pynq-z2::0.0(custom)" systemProject="HW_EOS_app_system" sysConfig="HW_EOS_export" runtime="cpp" cpu="freertos10_xilinx_ps7_cortexa9_0" cpuInstance="ps7_cortexa9_0" os="freertos10_xilinx" mssSignature="8c566f7b71a06d5783c93f52a0267fdb">
+  <configuration name="Debug" id="xilinx.gnu.armv7.exe.debug.106619651">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+    <lastBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <configuration name="Release" id="xilinx.gnu.armv7.exe.release.1898638544" dirty="true">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <template appTemplateName="freertos_hello_world" hasBspSettings="true"/>
+</sdkproject:SdkProject>

@@ -1,0 +1,67 @@
+timestamp=[2024-01-04 16:50:33], mode=WORKBENCH_START, duration=0:00:11.623, duration_ms=11623, data={}
+timestamp=[2024-01-04 16:50:33], mode=WORKBENCH_UI_INIT, duration=0:00:00.019, duration_ms=19, data={editors_count=0, platform_editors_count=0, projects_count=0, platform_projects_count=0, active_platform_editor=false, projects=}
+timestamp=[2024-01-04 16:50:34], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.039, duration_ms=39, data={}
+timestamp=[2024-01-04 16:52:01], mode=APP_CREATION, duration=0:00:22.941, duration_ms=22941, data={name=HDMI_app, project_type=sdk, os=freertos10_xilinx, processor=ps7_cortexa9, runtime=cpp, platform=design_1_wrapper, application_type=application}
+timestamp=[2024-01-04 16:52:41], mode=PLATFORM_GENERATION, duration=0:00:17.216, duration_ms=17216, data={name=design_1_wrapper}
+timestamp=[2024-01-04 16:52:42], mode=BUILD, duration=0:00:00.998, duration_ms=998, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 16:58:46], mode=BUILD, duration=0:00:00.372, duration_ms=372, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 17:07:39], mode=PLATFORM_GENERATION, duration=0:00:10.416, duration_ms=10416, data={name=design_1_wrapper}
+timestamp=[2024-01-04 17:07:53], mode=BUILD, duration=0:00:00.831, duration_ms=831, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 17:25:00], mode=PLATFORM_GENERATION, duration=0:00:12.309, duration_ms=12309, data={name=design_1_wrapper}
+timestamp=[2024-01-04 17:25:25], mode=BUILD, duration=0:00:00.996, duration_ms=996, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 17:35:59], mode=BUILD, duration=0:00:00.845, duration_ms=845, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 20:42:40], mode=WORKBENCH_START, duration=0:00:11.730, duration_ms=11730, data={}
+timestamp=[2024-01-04 20:42:41], mode=WORKBENCH_UI_INIT, duration=0:00:00.737, duration_ms=737, data={editors_count=4, platform_editors_count=1, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=HDMI_app,HDMI_app_system,RemoteSystemsTempFiles,design_1_wrapper}
+timestamp=[2024-01-04 20:42:42], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.083, duration_ms=83, data={}
+timestamp=[2024-01-04 20:43:40], mode=PLATFORM_GENERATION, duration=0:00:11.129, duration_ms=11129, data={name=design_1_wrapper}
+timestamp=[2024-01-04 20:47:51], mode=BUILD, duration=0:00:00.983, duration_ms=983, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 21:31:59], mode=BUILD, duration=0:00:00.779, duration_ms=779, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 21:40:28], mode=BUILD, duration=0:00:00.379, duration_ms=379, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 21:44:42], mode=BUILD, duration=0:00:00.727, duration_ms=727, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 21:48:16], mode=BUILD, duration=0:00:00.726, duration_ms=726, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 21:56:50], mode=BUILD, duration=0:00:00.721, duration_ms=721, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 21:58:40], mode=BUILD, duration=0:00:00.723, duration_ms=723, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:03:27], mode=BUILD, duration=0:00:00.723, duration_ms=723, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:10:00], mode=BUILD, duration=0:00:00.725, duration_ms=725, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:11:24], mode=BUILD, duration=0:00:00.725, duration_ms=725, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:13:46], mode=BUILD, duration=0:00:00.719, duration_ms=719, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:17:44], mode=BUILD, duration=0:00:00.723, duration_ms=723, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:19:20], mode=BUILD, duration=0:00:00.729, duration_ms=729, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:22:29], mode=BUILD, duration=0:00:00.370, duration_ms=370, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:22:54], mode=BUILD, duration=0:00:00.371, duration_ms=371, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:23:27], mode=BUILD, duration=0:00:00.722, duration_ms=722, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:24:37], mode=BUILD, duration=0:00:00.720, duration_ms=720, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:25:45], mode=BUILD, duration=0:00:00.720, duration_ms=720, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:26:05], mode=BUILD, duration=0:00:00.262, duration_ms=262, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:27:58], mode=BUILD, duration=0:00:00.717, duration_ms=717, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:29:53], mode=BUILD, duration=0:00:00.367, duration_ms=367, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:30:23], mode=BUILD, duration=0:00:00.723, duration_ms=723, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:45:20], mode=BUILD, duration=0:00:00.270, duration_ms=270, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:50:33], mode=BUILD, duration=0:00:00.724, duration_ms=724, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 22:54:23], mode=BUILD, duration=0:00:00.728, duration_ms=728, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:02:25], mode=BUILD, duration=0:00:00.369, duration_ms=369, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:04:03], mode=BUILD, duration=0:00:00.375, duration_ms=375, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:06:52], mode=BUILD, duration=0:00:00.377, duration_ms=377, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:07:55], mode=BUILD, duration=0:00:00.727, duration_ms=727, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:19:01], mode=BUILD, duration=0:00:00.420, duration_ms=420, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:20:07], mode=BUILD, duration=0:00:00.776, duration_ms=776, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:20:21], mode=BUILD, duration=0:00:00.725, duration_ms=725, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:22:02], mode=BUILD, duration=0:00:00.771, duration_ms=771, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:23:35], mode=BUILD, duration=0:00:00.716, duration_ms=716, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:24:52], mode=BUILD, duration=0:00:00.725, duration_ms=725, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:36:33], mode=BUILD, duration=0:00:00.374, duration_ms=374, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:37:00], mode=BUILD, duration=0:00:00.369, duration_ms=369, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:37:14], mode=BUILD, duration=0:00:00.365, duration_ms=365, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:37:29], mode=BUILD, duration=0:00:00.722, duration_ms=722, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:37:44], mode=BUILD, duration=0:00:00.727, duration_ms=727, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:39:32], mode=BUILD, duration=0:00:00.721, duration_ms=721, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:41:12], mode=BUILD, duration=0:00:00.726, duration_ms=726, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:41:59], mode=BUILD, duration=0:00:00.272, duration_ms=272, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:43:31], mode=BUILD, duration=0:00:00.727, duration_ms=727, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:45:16], mode=BUILD, duration=0:00:00.725, duration_ms=725, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:45:58], mode=BUILD, duration=0:00:00.678, duration_ms=678, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:48:12], mode=BUILD, duration=0:00:00.726, duration_ms=726, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:48:55], mode=BUILD, duration=0:00:00.736, duration_ms=736, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:50:52], mode=BUILD, duration=0:00:00.726, duration_ms=726, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:53:03], mode=BUILD, duration=0:00:00.724, duration_ms=724, data={name=HDMI_app, configuration=Debug, clean_build=false}
+timestamp=[2024-01-04 23:54:48], mode=BUILD, duration=0:00:00.721, duration_ms=721, data={name=HDMI_app, configuration=Debug, clean_build=false}

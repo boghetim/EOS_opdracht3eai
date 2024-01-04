@@ -61,7 +61,7 @@ static TimerHandle_t xTimer = NULL;
 char HWstring[15] = "beware of noise";
 long RxtaskCntr = 0;
 int status;
-float time = 0.0;
+float time = 1.0;
 /* audio parameters  */
 unsigned int frequency=75;
 unsigned int signal_type=0;

@@ -4544,3 +4544,21 @@ con
 
 14:19:48 INFO  : Launch script is exported to file 'C:\Users\boghe\EOS_opdracht3eai\vraag2\vitis_audio\vitis\audio_app_system\_ide\scripts\debugger_audio_app-default_10.tcl'
 14:21:09 INFO  : Disconnected from the channel tcfchan#36.
+19:22:39 DEBUG : Logs will be stored at 'C:/Users/boghe/EOS_opdracht3eai/vraag2/vitis_audio/vitis/IDE.log'.
+19:22:40 INFO  : Launching XSCT server: xsct.bat -n  -interactive C:\Users\boghe\EOS_opdracht3eai\vraag2\vitis_audio\vitis\temp_xsdb_launch_script.tcl
+19:22:45 INFO  : XSCT server has started successfully.
+19:22:45 INFO  : Successfully done setting XSCT server connection channel  
+19:22:45 INFO  : plnx-install-location is set to ''
+19:22:45 INFO  : Successfully done setting workspace for the tool. 
+19:22:52 INFO  : Registering command handlers for Vitis TCF services
+19:22:52 INFO  : Platform repository initialization has completed.
+19:22:55 INFO  : Successfully done query RDI_DATADIR 
+20:10:34 DEBUG : Logs will be stored at 'C:/Users/boghe/EOS_opdracht3eai/vraag2/vitis_audio/vitis/IDE.log'.
+20:10:35 INFO  : Launching XSCT server: xsct.bat -n  -interactive C:\Users\boghe\EOS_opdracht3eai\vraag2\vitis_audio\vitis\temp_xsdb_launch_script.tcl
+20:10:38 INFO  : XSCT server has started successfully.
+20:10:38 INFO  : Successfully done setting XSCT server connection channel  
+20:10:38 INFO  : plnx-install-location is set to ''
+20:10:38 INFO  : Successfully done setting workspace for the tool. 
+20:10:46 INFO  : Registering command handlers for Vitis TCF services
+20:10:47 INFO  : Platform repository initialization has completed.
+20:10:49 INFO  : Successfully done query RDI_DATADIR 

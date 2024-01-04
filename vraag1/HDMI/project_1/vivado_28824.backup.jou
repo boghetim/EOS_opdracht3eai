@@ -1,0 +1,220 @@
+#-----------------------------------------------------------
+# Vivado v2023.1 (64-bit)
+# SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+# IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+# SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+# Start of session at: Thu Jan  4 15:13:47 2024
+# Process ID: 28824
+# Current directory: C:/Users/boghe/EOS_opdracht3eai/vraag1/HDMI/project_1
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent25292 C:\Users\boghe\EOS_opdracht3eai\vraag1\HDMI\project_1\project_1.xpr
+# Log file: C:/Users/boghe/EOS_opdracht3eai/vraag1/HDMI/project_1/vivado.log
+# Journal file: C:/Users/boghe/EOS_opdracht3eai/vraag1/HDMI/project_1\vivado.jou
+# Running On: LAPTOP-ISJLH1PH, OS: Windows, CPU Frequency: 3194 MHz, CPU Physical cores: 15, Host memory: 14877 MB
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/boghe/EOS_opdracht3eai/vraag1/HDMI/project_1/project_1.xpr
+update_compile_order -fileset sources_1
+open_bd_design {C:/Users/boghe/EOS_opdracht3eai/vraag1/HDMI/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_0
+endgroup
+set_property location {0.5 -61 77} [get_bd_cells clk_wiz_0]
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 proc_sys_reset_0
+endgroup
+set_property location {1 -162 171} [get_bd_cells clk_wiz_0]
+set_property location {0.5 -435 4} [get_bd_cells clk_wiz_0]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins proc_sys_reset_0/slowest_sync_clk]
+connect_bd_net [get_bd_pins clk_wiz_0/locked] [get_bd_pins proc_sys_reset_0/dcm_locked]
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:axis_interconnect:2.1 axis_interconnect_0
+endgroup
+set_property location {3 309 -225} [get_bd_cells axis_interconnect_0]
+connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins axis_interconnect_0/ARESETN]
+connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins axis_interconnect_0/S00_AXIS_ARESETN]
+connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins axis_interconnect_0/M00_AXIS_ARESETN]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins axis_interconnect_0/ACLK]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins axis_interconnect_0/S00_AXIS_ACLK]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins axis_interconnect_0/M00_AXIS_ACLK]
+set_property location {3 242 690} [get_bd_cells processing_system7_0]
+set_property location {3 408 890} [get_bd_cells rst_ps7_0_100M]
+set_property location {4 718 653} [get_bd_cells ps7_0_axi_periph]
+set_property location {5 1047 658} [get_bd_cells axi_gpio_0]
+set_property location {5 1018 753} [get_bd_cells axi_gpio_1]
+set_property location {1202 403} [get_bd_intf_ports DDR]
+set_property location {1193 328} [get_bd_intf_ports sws_2bits]
+set_property location {1168 287} [get_bd_intf_ports leds_4bits]
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_vdma:6.3 axi_vdma_0
+endgroup
+set_property location {4 641 38} [get_bd_cells axi_vdma_0]
+connect_bd_net [get_bd_pins proc_sys_reset_0/peripheral_aresetn] [get_bd_pins axi_vdma_0/axi_resetn]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins axi_vdma_0/s_axi_lite_aclk]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins axi_vdma_0/m_axi_mm2s_aclk]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins axi_vdma_0/m_axis_mm2s_aclk]
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:v_tc:6.2 v_tc_0
+endgroup
+set_property location {4 491 369} [get_bd_cells v_tc_0]
+set_property location {4 810 286} [get_bd_cells v_tc_0]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins v_tc_0/clk]
+connect_bd_net [get_bd_pins proc_sys_reset_0/peripheral_aresetn] [get_bd_pins v_tc_0/resetn]
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 axi_interconnect_0
+endgroup
+delete_bd_objs [get_bd_nets proc_sys_reset_0_interconnect_aresetn] [get_bd_cells axis_interconnect_0]
+set_property location {3 443 -291} [get_bd_cells axi_interconnect_0]
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 axi_interconnect_1
+endgroup
+set_property location {5 1157 -246} [get_bd_cells axi_interconnect_1]
+set_property location {5 1196 -275} [get_bd_cells axi_interconnect_1]
+connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins axi_interconnect_0/ARESETN]
+connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins axi_interconnect_0/S00_ARESETN]
+connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins axi_interconnect_0/M00_ARESETN]
+connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins axi_interconnect_1/ARESETN]
+connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins axi_interconnect_1/S00_ARESETN]
+connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins axi_interconnect_1/M00_ARESETN]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins axi_interconnect_0/ACLK]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins axi_interconnect_0/S00_ACLK]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins axi_interconnect_0/M00_ACLK]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins axi_interconnect_1/ACLK]
+set_property location {3 447 -321} [get_bd_cells axi_interconnect_0]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins axi_interconnect_1/S00_ACLK]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins axi_interconnect_1/M00_ACLK]
+set_property location {4 829 -11} [get_bd_cells axi_vdma_0]
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:v_axi4s_vid_out:4.0 v_axi4s_vid_out_0
+endgroup
+set_property location {5 1214 192} [get_bd_cells v_axi4s_vid_out_0]
+set_property location {5 1242 308} [get_bd_cells v_axi4s_vid_out_0]
+set_property location {1437 591} [get_bd_intf_ports leds_4bits]
+set_property location {1409 544} [get_bd_intf_ports DDR]
+set_property location {1421 522} [get_bd_intf_ports FIXED_IO]
+set_property location {1429 507} [get_bd_intf_ports sws_2bits]
+connect_bd_intf_net [get_bd_intf_pins v_tc_0/vtiming_out] [get_bd_intf_pins v_axi4s_vid_out_0/vtiming_in]
+connect_bd_net [get_bd_pins proc_sys_reset_0/peripheral_aresetn] [get_bd_pins v_axi4s_vid_out_0/aresetn]
+connect_bd_net [get_bd_pins v_tc_0/gen_clken] [get_bd_pins v_axi4s_vid_out_0/vtg_ce]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins v_axi4s_vid_out_0/aclk]
+delete_bd_objs [get_bd_intf_nets processing_system7_0_M_AXI_GP0] [get_bd_intf_nets ps7_0_axi_periph_M00_AXI] [get_bd_intf_nets ps7_0_axi_periph_M01_AXI] [get_bd_cells ps7_0_axi_periph]
+delete_bd_objs [get_bd_nets processing_system7_0_FCLK_RESET0_N] [get_bd_cells rst_ps7_0_100M]
+delete_bd_objs [get_bd_intf_nets processing_system7_0_DDR] [get_bd_intf_ports DDR]
+delete_bd_objs [get_bd_intf_nets processing_system7_0_FIXED_IO] [get_bd_intf_ports FIXED_IO]
+delete_bd_objs [get_bd_intf_nets axi_gpio_1_GPIO] [get_bd_intf_ports leds_4bits]
+delete_bd_objs [get_bd_intf_nets axi_gpio_0_GPIO] [get_bd_intf_ports sws_2bits]
+delete_bd_objs [get_bd_intf_nets axi_gpio_1_GPIO2] [get_bd_intf_ports rgb_led]
+delete_bd_objs [get_bd_intf_nets axi_gpio_0_GPIO2] [get_bd_intf_ports btns_4bits]
+delete_bd_objs [get_bd_nets rst_ps7_0_100M_peripheral_aresetn] [get_bd_cells axi_gpio_0]
+delete_bd_objs [get_bd_cells axi_gpio_1]
+set_property location {4 844 676} [get_bd_cells processing_system7_0]
+delete_bd_objs [get_bd_nets processing_system7_0_FCLK_CLK0]
+set_property location {5.5 1374 64} [get_bd_cells processing_system7_0]
+set_property location {5.5 1188 26} [get_bd_cells processing_system7_0]
+startgroup
+set_property -dict [list \
+  CONFIG.CLKIN1_JITTER_PS {80.0} \
+  CONFIG.CLKOUT1_JITTER {124.615} \
+  CONFIG.CLKOUT1_PHASE_ERROR {96.948} \
+  CONFIG.CLK_IN1_BOARD_INTERFACE {sys_clock} \
+  CONFIG.MMCM_CLKFBOUT_MULT_F {8.000} \
+  CONFIG.MMCM_CLKIN1_PERIOD {8.000} \
+] [get_bd_cells clk_wiz_0]
+endgroup
+startgroup
+set_property -dict [list \
+  CONFIG.CLKOUT1_JITTER {216.859} \
+  CONFIG.CLKOUT1_PHASE_ERROR {245.344} \
+  CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {148.500} \
+  CONFIG.MMCM_CLKFBOUT_MULT_F {37.125} \
+  CONFIG.MMCM_CLKOUT0_DIVIDE_F {6.250} \
+  CONFIG.MMCM_DIVCLK_DIVIDE {5} \
+] [get_bd_cells clk_wiz_0]
+endgroup
+set_property location {5.5 972 -2} [get_bd_cells processing_system7_0]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins processing_system7_0/FCLK_CLK0]
+set_property location {1 -657 49} [get_bd_cells clk_wiz_0]
+startgroup
+set_property CONFIG.USE_RESET {false} [get_bd_cells clk_wiz_0]
+endgroup
+startgroup
+set_property CONFIG.NUM_MI {1} [get_bd_cells axi_interconnect_0]
+endgroup
+startgroup
+set_property CONFIG.NUM_MI {1} [get_bd_cells axi_interconnect_1]
+endgroup
+startgroup
+set_property -dict [list \
+  CONFIG.c_include_s2mm {0} \
+  CONFIG.c_m_axis_mm2s_tdata_width {24} \
+  CONFIG.c_mm2s_linebuffer_depth {1024} \
+  CONFIG.c_num_fstores {1} \
+] [get_bd_cells axi_vdma_0]
+endgroup
+startgroup
+set_property CONFIG.c_include_mm2s_dre {1} [get_bd_cells axi_vdma_0]
+endgroup
+connect_bd_intf_net -boundary_type upper [get_bd_intf_pins axi_interconnect_0/M00_AXI] [get_bd_intf_pins axi_vdma_0/S_AXI_LITE]
+connect_bd_intf_net [get_bd_intf_pins axi_vdma_0/M_AXI_MM2S] -boundary_type upper [get_bd_intf_pins axi_interconnect_1/S00_AXI]
+startgroup
+set_property -dict [list \
+  CONFIG.HAS_AXI4_LITE {false} \
+  CONFIG.enable_detection {false} \
+] [get_bd_cells v_tc_0]
+endgroup
+startgroup
+set_property CONFIG.VIDEO_MODE {1080p} [get_bd_cells v_tc_0]
+endgroup
+set_property location {3 -50 -345} [get_bd_cells axi_interconnect_0]
+connect_bd_intf_net -boundary_type upper [get_bd_intf_pins axi_interconnect_0/S00_AXI] [get_bd_intf_pins processing_system7_0/M_AXI_GP0]
+startgroup
+set_property CONFIG.PCW_USE_S_AXI_HP0 {1} [get_bd_cells processing_system7_0]
+endgroup
+connect_bd_intf_net -boundary_type upper [get_bd_intf_pins axi_interconnect_1/M00_AXI] [get_bd_intf_pins processing_system7_0/S_AXI_HP0]
+startgroup
+set_property -dict [list \
+  CONFIG.PCW_IRQ_F2P_INTR {1} \
+  CONFIG.PCW_USE_FABRIC_INTERRUPT {1} \
+] [get_bd_cells processing_system7_0]
+endgroup
+set_property  ip_repo_paths  C:/Users/boghe/EOS_opdracht3eai/vraag1/HDMI/project_1/vivado-library-master [current_project]
+update_ip_catalog
+add_files -fileset constrs_1 -norecurse C:/Users/boghe/EOS_opdracht3eai/vraag1/HDMI/project_1/IO_Ports.xdc
+open_bd_design {C:/Users/boghe/EOS_opdracht3eai/vraag1/HDMI/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+save_bd_design
+startgroup
+create_bd_cell -type ip -vlnv digilentinc.com:ip:rgb2dvi:1.4 rgb2dvi_0
+endgroup
+set_property location {6 1167 290} [get_bd_cells rgb2dvi_0]
+connect_bd_intf_net [get_bd_intf_pins v_axi4s_vid_out_0/vid_io_out] [get_bd_intf_pins rgb2dvi_0/RGB]
+startgroup
+set_property -dict [list \
+  CONFIG.kClkPrimitive {MMCM} \
+  CONFIG.kRstActiveHigh {false} \
+] [get_bd_cells rgb2dvi_0]
+endgroup
+connect_bd_net [get_bd_pins proc_sys_reset_0/peripheral_aresetn] [get_bd_pins rgb2dvi_0/aRst_n]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins rgb2dvi_0/PixelClk]
+startgroup
+make_bd_pins_external  [get_bd_pins rgb2dvi_0/TMDS_Clk_n] [get_bd_pins rgb2dvi_0/TMDS_Data_p] [get_bd_pins rgb2dvi_0/TMDS_Clk_p] [get_bd_pins rgb2dvi_0/TMDS_Data_n]
+endgroup
+startgroup
+make_bd_intf_pins_external  [get_bd_intf_pins processing_system7_0/DDR] [get_bd_intf_pins processing_system7_0/FIXED_IO]
+endgroup
+connect_bd_net [get_bd_pins proc_sys_reset_0/ext_reset_in] [get_bd_pins processing_system7_0/FCLK_RESET0_N]
+connect_bd_net [get_bd_pins axi_vdma_0/mm2s_introut] [get_bd_pins processing_system7_0/IRQ_F2P]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins processing_system7_0/S_AXI_HP0_ACLK]
+set_property location {5 723 432} [get_bd_cells v_axi4s_vid_out_0]
+set_property location {5 718 258} [get_bd_cells v_axi4s_vid_out_0]
+connect_bd_intf_net [get_bd_intf_pins axi_vdma_0/M_AXIS_MM2S] [get_bd_intf_pins v_axi4s_vid_out_0/video_in]
+startgroup
+set_property CONFIG.C_HAS_ASYNC_CLK {1} [get_bd_cells v_axi4s_vid_out_0]
+endgroup
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins v_axi4s_vid_out_0/vid_io_out_clk]
+save_bd_design
+reset_run synth_1
+reset_run design_1_processing_system7_0_0_synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 15
+wait_on_run impl_1
+open_run impl_1
+write_hw_platform -fixed -include_bit -force -file C:/Users/boghe/EOS_opdracht3eai/vraag1/HDMI/project_1/design_1_wrapper.xsa
