@@ -24,12 +24,15 @@ static XScuGic Intc;
 
 static int SetupIntrSystem(XAxiVdma *AxiVdmaPtr, u16 ReadIntrId);
 void drawGrid(unsigned char* buffer);
+void updateStartPosition();
 void drawToken(unsigned char* buffer);
 
 unsigned char Buffer[FrameSize];
 
-int positionPlayer1 = 12;
-int positionPlayer2 = 15;
+int CheckRooster[4] = {0, 0, 0, 0};
+
+int positionPlayer1 = 0;
+int positionPlayer2 = 0;
 
 int main(){
 	int status;
@@ -75,19 +78,31 @@ int main(){
 
 	SetupIntrSystem(&myVDMA, XPAR_FABRIC_AXI_VDMA_0_MM2S_INTROUT_INTR);
 
-
 	drawGrid(Buffer);
-	drawToken(Buffer);
+	xil_printf("rooster, check\r\n");
+	positionPlayer1 = 0;
+	positionPlayer2 = 1;
 
-	positionPlayer1 = 8;
-	positionPlayer2 = 11;
-
-	drawToken(Buffer);
-
-	positionPlayer1 = 13;
-	positionPlayer2 = 9;
+	Addr = (u32)&(Buffer[0]);
 
 	drawToken(Buffer);
+	xil_printf("1ste disks, check\r\n");
+	positionPlayer1 = 1;
+	positionPlayer2 = 2;
+
+	Addr = (u32)&(Buffer[0]);
+
+	drawToken(Buffer);
+	xil_printf("2de disks, check\r\n");
+
+	positionPlayer1 = 2;
+	positionPlayer2 = 0;
+	drawToken(Buffer);
+
+	positionPlayer1 = 3;
+	positionPlayer2 = 1;
+	drawToken(Buffer);
+
 
 	Xil_DCacheFlush();
 
@@ -211,6 +226,7 @@ void drawGrid(unsigned char* buffer) {
 
 void drawToken(unsigned char* buffer) {
 
+	updateStartPosition();
 
     // Teken de token voor op de positie van speler 1
     int xStartX = (positionPlayer1 % vierOpEenRij) * CellWidth;
@@ -242,6 +258,62 @@ void drawToken(unsigned char* buffer) {
             buffer[bufferIndex + 1] = 0x00; // B (zwart)
             buffer[bufferIndex + 2] = 0xff; // R (zwart)
         }
+    }
+
+}
+
+void updateStartPosition() {
+    if (positionPlayer1 >= 0 && positionPlayer1 < 4) {
+        if (CheckRooster[positionPlayer1] == 0) {
+        	CheckRooster[positionPlayer1] += 1;
+        	positionPlayer1 +=12;
+        }
+        else if (CheckRooster[positionPlayer1] == 1) {
+        	CheckRooster[positionPlayer1] += 1;
+        	positionPlayer1 +=8;
+        }
+        else if (CheckRooster[positionPlayer1] == 2) {
+        	CheckRooster[positionPlayer1] += 1;
+        	positionPlayer1 +=4;
+        }
+        else if (CheckRooster[positionPlayer1] == 3) {
+        	CheckRooster[positionPlayer1] += 1;
+        	//waarde blijft 0
+        }
+        else{
+        	xil_printf("value must be 0 till 3, value is now:%d\r\n", positionPlayer1);
+        }
+
+        xil_printf("player1:%d\r\n", positionPlayer1);
+
+    }
+
+    if (positionPlayer2 >= 0 && positionPlayer2 < 4) {
+        if (CheckRooster[positionPlayer2] == 0) {
+        	CheckRooster[positionPlayer2] += 1;
+        	positionPlayer2 +=12;
+        }
+        else if (CheckRooster[positionPlayer2] == 1) {
+        	CheckRooster[positionPlayer2] += 1;
+        	positionPlayer2 +=8;
+        }
+        else if (CheckRooster[positionPlayer2] == 2) {
+        	CheckRooster[positionPlayer2] += 1;
+        	positionPlayer2 +=4;
+        }
+        else if (CheckRooster[positionPlayer2] == 3) {
+        	CheckRooster[positionPlayer2] += 1;
+        	//waarde blijft 0
+        }
+        else{
+        	xil_printf("value must be 0 till 3, value is now:%d\r\n", positionPlayer2);
+        }
+
+        xil_printf("player2:%d\r\n", positionPlayer2);
+        xil_printf("array is :%d\r\n", CheckRooster[0]);
+        xil_printf("array is :%d\r\n", CheckRooster[1]);
+        xil_printf("array is :%d\r\n", CheckRooster[2]);
+        xil_printf("array is :%d\r\n", CheckRooster[3]);
     }
 
 }
