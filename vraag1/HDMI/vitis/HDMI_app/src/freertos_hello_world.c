@@ -26,10 +26,12 @@ static int SetupIntrSystem(XAxiVdma *AxiVdmaPtr, u16 ReadIntrId);
 void drawGrid(unsigned char* buffer);
 void updateStartPosition();
 void drawToken(unsigned char* buffer);
+void WinOrNot();
 
 unsigned char Buffer[FrameSize];
 
 int CheckRooster[4] = {0, 0, 0, 0};
+int WinnerCheck[16];
 
 int positionPlayer1 = 0;
 int positionPlayer2 = 0;
@@ -80,27 +82,35 @@ int main(){
 
 	drawGrid(Buffer);
 	xil_printf("rooster, check\r\n");
-	positionPlayer1 = 0;
-	positionPlayer2 = 1;
+	positionPlayer1 = 3;
+	positionPlayer2 = 2;
 
 	Addr = (u32)&(Buffer[0]);
 
 	drawToken(Buffer);
 	xil_printf("1ste disks, check\r\n");
 	positionPlayer1 = 1;
-	positionPlayer2 = 2;
+	positionPlayer2 = 1;
 
 	Addr = (u32)&(Buffer[0]);
 
 	drawToken(Buffer);
 	xil_printf("2de disks, check\r\n");
 
+	positionPlayer1 = 1;
+	positionPlayer2 = 0;
+	drawToken(Buffer);
+
 	positionPlayer1 = 2;
+	positionPlayer2 = 2;
+	drawToken(Buffer);
+
+	positionPlayer1 = 3;
 	positionPlayer2 = 0;
 	drawToken(Buffer);
 
 	positionPlayer1 = 3;
-	positionPlayer2 = 1;
+	positionPlayer2 = 3;
 	drawToken(Buffer);
 
 
@@ -244,7 +254,7 @@ void drawToken(unsigned char* buffer) {
         }
     }
 
-    // Teken de token voor op de positie van speler 1
+    // Teken de token voor op de positie van speler 2
     int xStartO = (positionPlayer2 % vierOpEenRij) * CellWidth;
     int yStartO = (positionPlayer2 / vierOpEenRij) * CellHeight;
     int halfCellWidthO = CellWidth / 2;
@@ -259,6 +269,11 @@ void drawToken(unsigned char* buffer) {
             buffer[bufferIndex + 2] = 0xff; // R (zwart)
         }
     }
+
+    WinnerCheck[positionPlayer1]=1;
+    WinnerCheck[positionPlayer2]=2;
+    WinOrNot();
+
 
 }
 
@@ -283,9 +298,6 @@ void updateStartPosition() {
         else{
         	xil_printf("value must be 0 till 3, value is now:%d\r\n", positionPlayer1);
         }
-
-        xil_printf("player1:%d\r\n", positionPlayer1);
-
     }
 
     if (positionPlayer2 >= 0 && positionPlayer2 < 4) {
@@ -308,12 +320,47 @@ void updateStartPosition() {
         else{
         	xil_printf("value must be 0 till 3, value is now:%d\r\n", positionPlayer2);
         }
-
-        xil_printf("player2:%d\r\n", positionPlayer2);
-        xil_printf("array is :%d\r\n", CheckRooster[0]);
-        xil_printf("array is :%d\r\n", CheckRooster[1]);
-        xil_printf("array is :%d\r\n", CheckRooster[2]);
-        xil_printf("array is :%d\r\n", CheckRooster[3]);
     }
-
 }
+
+void WinOrNot() {
+
+	//check alle horizontale lijnen player1
+	for (int i = 0; i <= 12; i+=4) {
+		if (WinnerCheck[i]==1 && WinnerCheck[i+1] ==1 && WinnerCheck[i+2]==1 && WinnerCheck[i+3]==1){
+			xil_printf("winner is player 1\r\n");
+		}
+	}
+	//check alle horizontale lijnen player2
+	for (int i = 0; i <= 12; i+=4) {
+		if (WinnerCheck[i]==2 && WinnerCheck[i+1] ==2 && WinnerCheck[i+2]==2 && WinnerCheck[i+3]==2){
+			xil_printf("winner is player 2\r\n");
+		}
+	}
+	//check alle verticale lijnen player1
+	for (int i = 0; i <= 4; i++) {
+		if (WinnerCheck[i]==1 && WinnerCheck[i+4] ==1 && WinnerCheck[i+8]==1 && WinnerCheck[i+12]==1){
+			xil_printf("winner is player 1\r\n");
+		}
+	}
+	//check alle verticale lijnen player2
+	for (int i = 0; i <= 4; i++) {
+		if (WinnerCheck[i]==2 && WinnerCheck[i+4] ==2 && WinnerCheck[i+8]==2 && WinnerCheck[i+12]==2){
+			xil_printf("winner is player 2\r\n");
+		}
+	}
+	//diagonaal
+	if (WinnerCheck[0] == 1 && WinnerCheck[5] == 1 && WinnerCheck[10] == 1 && WinnerCheck[15] == 1 ){
+		xil_printf("winner is player 1\r\n");
+	}
+	if (WinnerCheck[0] == 2 && WinnerCheck[5] == 2 && WinnerCheck[10] == 2 && WinnerCheck[15] == 2 ){
+		xil_printf("winner is player 2\r\n");
+	}
+	if (WinnerCheck[3] == 1 && WinnerCheck[6] == 1 && WinnerCheck[9] == 1 && WinnerCheck[12] == 1 ){
+		xil_printf("winner is player 1\r\n");
+	}
+	if (WinnerCheck[3] == 2 && WinnerCheck[6] == 2 && WinnerCheck[9] == 2 && WinnerCheck[12] == 2 ){
+		xil_printf("winner is player 2\r\n");
+	}
+}
+
