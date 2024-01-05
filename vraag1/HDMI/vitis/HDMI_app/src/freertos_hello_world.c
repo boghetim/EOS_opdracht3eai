@@ -1,10 +1,6 @@
-/*
- * vdmaTest.c
- *
- *  Created on: Apr 9, 2020
- *      Author: VIPIN
- */
 #include "xparameters.h"
+#include "FreeRTOS.h"
+#include "task.h"
 #include "xaxivdma.h"
 #include "xscugic.h"
 #include "sleep.h"
@@ -26,19 +22,21 @@ static int SetupIntrSystem(XAxiVdma *AxiVdmaPtr, u16 ReadIntrId);
 void drawGrid(unsigned char* buffer);
 void updateStartPosition();
 void drawToken(unsigned char* buffer);
-void WinOrNot();
+void WinOrNot(unsigned char* buffer);
+void drawWinningSquare(unsigned char* buffer, int color);
 
 unsigned char Buffer[FrameSize];
+unsigned char TempBuffer[FrameSize];
 
 int CheckRooster[4] = {0, 0, 0, 0};
-int WinnerCheck[16];
-
+int WinnerCheck[17];
 int positionPlayer1 = 0;
 int positionPlayer2 = 0;
 
 int main(){
 	int status;
 	int Index;
+
 	u32 Addr;
 	XAxiVdma myVDMA;
 	XAxiVdma_Config *config = XAxiVdma_LookupConfig(XPAR_AXI_VDMA_0_DEVICE_ID);
@@ -64,7 +62,6 @@ int main(){
 
     Addr = (u32)&(Buffer[0]);
 
-
 	for(Index = 0; Index < myVDMA.MaxNumFrames; Index++) {
 		ReadCfg.FrameStoreStartAddr[Index] = Addr;
 		Addr +=  FrameSize;
@@ -81,29 +78,33 @@ int main(){
 	SetupIntrSystem(&myVDMA, XPAR_FABRIC_AXI_VDMA_0_MM2S_INTROUT_INTR);
 
 	drawGrid(Buffer);
-	xil_printf("rooster, check\r\n");
+
 	positionPlayer1 = 3;
 	positionPlayer2 = 2;
 
-	Addr = (u32)&(Buffer[0]);
-
+	positionPlayer1 = 3;
+	positionPlayer2 = 2;
 	drawToken(Buffer);
-	xil_printf("1ste disks, check\r\n");
+
+	//Addr = (u32)&(Buffer[0]);
+
 	positionPlayer1 = 1;
 	positionPlayer2 = 1;
-
-	Addr = (u32)&(Buffer[0]);
-
 	drawToken(Buffer);
-	xil_printf("2de disks, check\r\n");
+
+	//Addr = (u32)&(Buffer[0]);
 
 	positionPlayer1 = 1;
 	positionPlayer2 = 0;
 	drawToken(Buffer);
 
+	//Addr = (u32)&(Buffer[0]);
+
 	positionPlayer1 = 2;
 	positionPlayer2 = 2;
 	drawToken(Buffer);
+
+	//Addr = (u32)&(Buffer[0]);
 
 	positionPlayer1 = 3;
 	positionPlayer2 = 0;
@@ -112,7 +113,6 @@ int main(){
 	positionPlayer1 = 3;
 	positionPlayer2 = 3;
 	drawToken(Buffer);
-
 
 	Xil_DCacheFlush();
 
@@ -203,12 +203,14 @@ static int SetupIntrSystem(XAxiVdma *AxiVdmaPtr, u16 ReadIntrId)
 }
 
 void drawGrid(unsigned char* buffer) {
+
+	memcpy(TempBuffer, buffer, FrameSize);
     // Vul de buffer met wit
     for (int i = 0; i < VSize; ++i) {
         for (int j = 0; j < HSize * 3; j = j + 3) {
-            buffer[(i * HSize * 3) + j] = 0xff;     // R
-            buffer[(i * HSize * 3) + j + 1] = 0xff; // G
-            buffer[(i * HSize * 3) + j + 2] = 0xff; // B
+        	TempBuffer[(i * HSize * 3) + j] = 0xff;     // G
+            TempBuffer[(i * HSize * 3) + j + 1] = 0xff; // B
+            TempBuffer[(i * HSize * 3) + j + 2] = 0xff; // R
         }
     }
 
@@ -216,9 +218,9 @@ void drawGrid(unsigned char* buffer) {
     for (int i = 1; i <= vierOpEenRij - 1; ++i) {
         int yPos = i * CellHeight - 5; // Aanpassen voor centrering van de lijn
         for (int j = 0; j < HSize * 3; j = j + 3) {
-            buffer[(yPos * HSize * 3) + j] = 0x00;     // G (zwart)
-            buffer[(yPos * HSize * 3) + j + 1] = 0x00; // B (zwart)
-            buffer[(yPos * HSize * 3) + j + 2] = 0x00; // R (zwart)
+        	TempBuffer[(yPos * HSize * 3) + j] = 0x00;     // G (zwart)
+        	TempBuffer[(yPos * HSize * 3) + j + 1] = 0x00; // B (zwart)
+        	TempBuffer[(yPos * HSize * 3) + j + 2] = 0x00; // R (zwart)
         }
     }
 
@@ -226,15 +228,18 @@ void drawGrid(unsigned char* buffer) {
     for (int i = 1; i <= vierOpEenRij - 1; ++i) {
         int xPos = i * CellWidth - 5; // Aanpassen voor centrering van de lijn
         for (int j = 0; j < VSize; ++j) {
-            buffer[(j * HSize * 3) + (xPos * 3)] = 0x00;     // G (zwart)
-            buffer[(j * HSize * 3) + (xPos * 3) + 1] = 0x00; // B (zwart)
-            buffer[(j * HSize * 3) + (xPos * 3) + 2] = 0x00; // R (zwart)
+        	TempBuffer[(j * HSize * 3) + (xPos * 3)] = 0x00;     // G (zwart)
+        	TempBuffer[(j * HSize * 3) + (xPos * 3) + 1] = 0x00; // B (zwart)
+        	TempBuffer[(j * HSize * 3) + (xPos * 3) + 2] = 0x00; // R (zwart)
         }
     }
+    memcpy(buffer, TempBuffer, FrameSize);
 
 }
 
 void drawToken(unsigned char* buffer) {
+
+    memcpy(TempBuffer, buffer, FrameSize);
 
 	updateStartPosition();
 
@@ -248,9 +253,9 @@ void drawToken(unsigned char* buffer) {
     for (int i = 0; i < halfCellHeightX; ++i) {
         for (int j = 0; j < halfCellWidthX; ++j) {
             int bufferIndex = ((startY_X + i) * HSize + (startX_X + j)) * 3;
-            buffer[bufferIndex] = 0xff;     // G (zwart)
-            buffer[bufferIndex + 1] = 0x00; // B (zwart)
-            buffer[bufferIndex + 2] = 0xff; // R (zwart)
+            TempBuffer[bufferIndex] = 0xff;     // G (zwart)
+            TempBuffer[bufferIndex + 1] = 0x00; // B (zwart)
+            TempBuffer[bufferIndex + 2] = 0xff; // R (zwart)
         }
     }
 
@@ -264,16 +269,17 @@ void drawToken(unsigned char* buffer) {
     for (int i = 0; i < halfCellHeightO; ++i) {
         for (int j = 0; j < halfCellWidthO; ++j) {
             int bufferIndex = ((startY_O + i) * HSize + (startX_O + j)) * 3;
-            buffer[bufferIndex] = 0x00;     // G (zwart)
-            buffer[bufferIndex + 1] = 0x00; // B (zwart)
-            buffer[bufferIndex + 2] = 0xff; // R (zwart)
+            TempBuffer[bufferIndex] = 0x00;     // G (zwart)
+            TempBuffer[bufferIndex + 1] = 0x00; // B (zwart)
+            TempBuffer[bufferIndex + 2] = 0xff; // R (zwart)
         }
     }
 
     WinnerCheck[positionPlayer1]=1;
     WinnerCheck[positionPlayer2]=2;
-    WinOrNot();
+    WinOrNot(TempBuffer);
 
+    memcpy(buffer, TempBuffer, FrameSize);
 
 }
 
@@ -323,44 +329,92 @@ void updateStartPosition() {
     }
 }
 
-void WinOrNot() {
+void WinOrNot(unsigned char* TempBuffer) {
 
 	//check alle horizontale lijnen player1
 	for (int i = 0; i <= 12; i+=4) {
 		if (WinnerCheck[i]==1 && WinnerCheck[i+1] ==1 && WinnerCheck[i+2]==1 && WinnerCheck[i+3]==1){
-			xil_printf("winner is player 1\r\n");
+			WinnerCheck[16] = 1;
 		}
 	}
 	//check alle horizontale lijnen player2
 	for (int i = 0; i <= 12; i+=4) {
 		if (WinnerCheck[i]==2 && WinnerCheck[i+1] ==2 && WinnerCheck[i+2]==2 && WinnerCheck[i+3]==2){
-			xil_printf("winner is player 2\r\n");
+			WinnerCheck[16] = 2;
 		}
 	}
 	//check alle verticale lijnen player1
 	for (int i = 0; i <= 4; i++) {
 		if (WinnerCheck[i]==1 && WinnerCheck[i+4] ==1 && WinnerCheck[i+8]==1 && WinnerCheck[i+12]==1){
-			xil_printf("winner is player 1\r\n");
+			WinnerCheck[16] = 1;
 		}
 	}
 	//check alle verticale lijnen player2
 	for (int i = 0; i <= 4; i++) {
 		if (WinnerCheck[i]==2 && WinnerCheck[i+4] ==2 && WinnerCheck[i+8]==2 && WinnerCheck[i+12]==2){
-			xil_printf("winner is player 2\r\n");
+			WinnerCheck[16] = 2;
 		}
 	}
 	//diagonaal
 	if (WinnerCheck[0] == 1 && WinnerCheck[5] == 1 && WinnerCheck[10] == 1 && WinnerCheck[15] == 1 ){
-		xil_printf("winner is player 1\r\n");
+		WinnerCheck[16] = 1;
 	}
 	if (WinnerCheck[0] == 2 && WinnerCheck[5] == 2 && WinnerCheck[10] == 2 && WinnerCheck[15] == 2 ){
-		xil_printf("winner is player 2\r\n");
+		WinnerCheck[16] = 2;
 	}
 	if (WinnerCheck[3] == 1 && WinnerCheck[6] == 1 && WinnerCheck[9] == 1 && WinnerCheck[12] == 1 ){
-		xil_printf("winner is player 1\r\n");
+		WinnerCheck[16] = 1;
 	}
 	if (WinnerCheck[3] == 2 && WinnerCheck[6] == 2 && WinnerCheck[9] == 2 && WinnerCheck[12] == 2 ){
-		xil_printf("winner is player 2\r\n");
+		WinnerCheck[16] = 2;
 	}
+
+	if (WinnerCheck[16] == 1){
+		xil_printf("winner is player 1\r\n");
+		drawWinningSquare(TempBuffer, 1);
+	}
+	if (WinnerCheck[16] == 2){
+		xil_printf("winner is player 2\r\n");
+		drawWinningSquare(TempBuffer, 2);
+	}
+}
+
+void drawWinningSquare(unsigned char* buffer, int color) {
+
+	memcpy(TempBuffer, buffer, FrameSize);
+
+    int centerX = HSize / 2;
+    int centerY = VSize / 2;
+    int squareSize = 10; // Startgrootte van het vierkant
+
+
+    // Loop om het vierkant te tekenen en te laten groeien
+    for (int size = squareSize; size < 100; size += 5) {
+        for (int i = -size / 2; i < size / 2; ++i) {
+            for (int j = -size / 2; j < size / 2; ++j) {
+                int x = centerX + i;
+                int y = centerY + j;
+                if (x >= 0 && x < HSize && y >= 0 && y < VSize) {
+                    int bufferIndex = (y * HSize + x) * 3;
+                    if (color == 1) {
+                        // Geel vierkant
+                    	TempBuffer[bufferIndex] = 0xff;     // G
+                        TempBuffer[bufferIndex + 1] = 0xff; // B
+                        TempBuffer[bufferIndex + 2] = 0x00; // R
+                    } else {
+                        // Rood vierkant
+                    	TempBuffer[bufferIndex] = 0x00;     // G
+                    	TempBuffer[bufferIndex + 1] = 0x00; // B
+                    	TempBuffer[bufferIndex + 2] = 0xff; // R
+                    }
+                }
+            }
+        }
+        // Kopieer het buffer naar het scherm na elke verandering
+        // Hier kun je eventueel een kleine vertraging toevoegen
+        memcpy(Buffer, buffer, FrameSize);
+        // Ververs het scherm
+        Xil_DCacheFlush();
+    }
 }
 
