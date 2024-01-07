@@ -34,6 +34,8 @@ int CheckRooster[4] = {0, 0, 0, 0};
 int WinnerCheck[17];
 int positionPlayer1 = 0;
 int positionPlayer2 = 0;
+int i=0;
+int j=0;
 
 /*----------------------------- */
 
@@ -144,11 +146,12 @@ int main()
 		}
 
 	/* threads */
+	drawGrid(Buffer);
 
 	sys_thread_new("main_thread", (void(*)(void*))main_thread, 0,
 			THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 
-	sys_thread_new("game", (void(*)(void*))testQueue, 0,
+	sys_thread_new("game", testQueue, 0,
 			THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 
 	vTaskStartScheduler();
@@ -391,12 +394,9 @@ void drawGrid(unsigned char* buffer) {
     xil_printf("Exiting drawGrid\n");
 }
 
-
 void drawToken(unsigned char* buffer) {
-	xil_printf("Entering drawtoken\n");
     memcpy(TempBuffer, buffer, FrameSize);
 
-    drawGrid(buffer);
 	updateStartPosition();
 
     // Teken de token voor op de positie van speler 1
@@ -430,19 +430,14 @@ void drawToken(unsigned char* buffer) {
             TempBuffer[bufferIndex + 2] = 0xff; // R (zwart)
         }
     }
-
     WinnerCheck[positionPlayer1]=1;
     WinnerCheck[positionPlayer2]=2;
     WinOrNot(TempBuffer);
 
     memcpy(buffer, TempBuffer, FrameSize);
-    xil_printf("exiting drawtoken\n");
-
 }
 
-
 void updateStartPosition() {
-	xil_printf("start updatepos\n");
     if (positionPlayer1 >= 0 && positionPlayer1 < 4) {
         if (CheckRooster[positionPlayer1] == 0) {
         	CheckRooster[positionPlayer1] += 1;
@@ -486,14 +481,10 @@ void updateStartPosition() {
         	xil_printf("value must be 0 till 3, value is now:%d\r\n", positionPlayer2);
         }
     }
-    xil_printf("exiting updatepos\n");
 }
-
-
 
 void WinOrNot(unsigned char* TempBuffer) {
 
-	xil_printf("Entering winlose\n");
 	//check alle horizontale lijnen player1
 	for (int i = 0; i <= 12; i+=4) {
 		if (WinnerCheck[i]==1 && WinnerCheck[i+1] ==1 && WinnerCheck[i+2]==1 && WinnerCheck[i+3]==1){
@@ -540,15 +531,9 @@ void WinOrNot(unsigned char* TempBuffer) {
 		xil_printf("winner is player 2\r\n");
 		drawWinningSquare(TempBuffer, 2);
 	}
-	xil_printf("exit winlose\n");
 }
 
-
-
-
 void drawWinningSquare(unsigned char* buffer, int color) {
-
-	xil_printf("Entering drawwin\n");
 
 	memcpy(TempBuffer, buffer, FrameSize);
 
@@ -556,59 +541,56 @@ void drawWinningSquare(unsigned char* buffer, int color) {
     int centerY = VSize / 2;
     int squareSize = 10; // Startgrootte van het vierkant
 
-
-    // Loop om het vierkant te tekenen en te laten groeien
-    for (int size = squareSize; size < 100; size += 5) {
-        for (int i = -size / 2; i < size / 2; ++i) {
-            for (int j = -size / 2; j < size / 2; ++j) {
-                int x = centerX + i;
-                int y = centerY + j;
-                if (x >= 0 && x < HSize && y >= 0 && y < VSize) {
-                    int bufferIndex = (y * HSize + x) * 3;
-                    if (color == 1) {
-                        // Geel vierkant
-                    	TempBuffer[bufferIndex] = 0xff;     // G
-                        TempBuffer[bufferIndex + 1] = 0xff; // B
-                        TempBuffer[bufferIndex + 2] = 0x00; // R
-                    } else {
-                        // Rood vierkant
-                    	TempBuffer[bufferIndex] = 0x00;     // G
-                    	TempBuffer[bufferIndex + 1] = 0x00; // B
-                    	TempBuffer[bufferIndex + 2] = 0xff; // R
+    //Loop om het vierkant te tekenen en te laten groeien
+        for (int size = squareSize; size < 500; size += 5) {
+            for (int i = -size / 2; i < size / 2; ++i) {
+                for (int j = -size / 2; j < size / 2; ++j) {
+    				i++;
+					j++;
+                    int x = centerX + i;
+                    int y = centerY + j;
+                    if (x >= 0 && x < HSize && y >= 0 && y < VSize) {
+                        int bufferIndex = (y * HSize + x) * 3;
+                        if (color == 1) {
+                            // Geel vierkant
+                        	TempBuffer[bufferIndex] = 0xff;     // G
+                            TempBuffer[bufferIndex + 1] = 0x00; // B
+                            TempBuffer[bufferIndex + 2] = 0xff; // R
+                        } else {
+                            // Rood vierkant
+                        	TempBuffer[bufferIndex] = 0x00;     // G
+                        	TempBuffer[bufferIndex + 1] = 0x00; // B
+                        	TempBuffer[bufferIndex + 2] = 0xff; // R
+                        }
                     }
                 }
             }
+
         }
-        // Kopieer het buffer naar het scherm na elke verandering
-        // Hier kun je eventueel een kleine vertraging toevoegen
         memcpy(Buffer, buffer, FrameSize);
         // Ververs het scherm
         Xil_DCacheFlush();
-    }
-	xil_printf("exit drawwin\n");
+
 }
-
-
 
 void testQueue(void *pvParameters) {
 	char udp_msg[1500];
-	if (xQueueReceive(udp_control, udp_msg, portMAX_DELAY) == pdTRUE) {
-			xil_printf("test queue: %s", udp_msg);
-			sscanf(udp_msg, "player1: %d ; player2: %d",
-							&(positionPlayer1), &(positionPlayer2));
-			xil_printf("test pl1: %d\r\n", positionPlayer1);
-			xil_printf("test pl2: %d\r\n", positionPlayer2);
+	xil_printf("\r\n");
 
-			drawToken(Buffer);
-	}
-	else
-	{
-			xil_printf("Queue is empty.\n");
+	while(1){
+		if (xQueueReceive(udp_control, udp_msg, portMAX_DELAY) == pdTRUE) {
+				sscanf(udp_msg, "player1: %d ; player2: %d",
+								&(positionPlayer1), &(positionPlayer2));
+				drawToken(Buffer);
+		}
+		else
+		{
+				xil_printf("Queue is empty.\n");
+		}
 	}
 
+	vTaskDelete(NULL);
 }
-
-
 
 void game(unsigned char* buffer){
 
