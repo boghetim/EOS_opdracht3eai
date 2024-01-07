@@ -1,0 +1,25 @@
+11:44:51 **** Incremental Build of configuration Debug for project vraag1_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/udp_perf_server.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/udp_perf_server.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/boghe/EOS_opdracht3eai/vraag1/udp/vitis/design_1_wrapper/export/design_1_wrapper/sw/design_1_wrapper/freertos10_xilinx_ps7_cortexa9_0/bspinclude/include -MMD -MP -MF"src/udp_perf_server.d" -MT"src/udp_perf_server.o" -o "src/udp_perf_server.o" "../src/udp_perf_server.c"
+'Finished building: ../src/udp_perf_server.c'
+' '
+'Building target: vraag1_app.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/boghe/EOS_opdracht3eai/vraag1/udp/vitis/design_1_wrapper/export/design_1_wrapper/sw/design_1_wrapper/freertos10_xilinx_ps7_cortexa9_0/bsplib/lib -o "vraag1_app.elf"  ./src/iic_phyreset.o ./src/main.o ./src/udp_perf_server.o   -Wl,--start-group,-lxil,-lfreertos,-lgcc,-lc,--end-group -Wl,--start-group,-lxil,-llwip4,-lgcc,-lc,--end-group
+'Finished building target: vraag1_app.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size vraag1_app.elf  |tee "vraag1_app.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+ 224093	   3540	52557888	52785521	3257171	vraag1_app.elf
+'Finished building: vraag1_app.elf.size'
+' '
+
+11:44:52 Build Finished (took 1s.6ms)
+
