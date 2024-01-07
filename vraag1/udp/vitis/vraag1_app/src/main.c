@@ -25,6 +25,8 @@ const int vierOpEenRij = 4;
 const int CellWidth = HSize / vierOpEenRij;
 const int CellHeight = VSize / vierOpEenRij;
 
+static XScuGic Intc;
+
 unsigned char Buffer[FrameSize];
 unsigned char TempBuffer[FrameSize];
 
@@ -52,6 +54,7 @@ int IicPhyReset(void);
 
 static int complete_nw_thread;
 
+
 void print_app_header();
 void start_application();
 
@@ -70,32 +73,89 @@ void network_thread(void *p);
 int main_thread();
 
 /* HDMI -------- */
+static void ReadCallBack(void *CallbackRef, u32 Mask);
+static void ReadErrorCallBack(void *CallbackRef, u32 Mask);
+static int SetupIntrSystem(XAxiVdma *AxiVdmaPtr, u16 ReadIntrId);
 void drawGrid(unsigned char* buffer);
 void updateStartPosition();
 void drawToken(unsigned char* buffer);
 void WinOrNot(unsigned char* buffer);
 void drawWinningSquare(unsigned char* buffer, int color);
+void testQueue();
+void game(unsigned char* buffer);
 
 /*---------------*/
 
 
 int main()
 {
+	udp_control = xQueueCreate(10, sizeof(char[1500]));
+	int status;
+	int Index;
 
-	udp_control = xQueueCreate(10, 1500);
+	u32 Addr;
+	XAxiVdma myVDMA;
+	XAxiVdma_Config *config = XAxiVdma_LookupConfig(XPAR_AXI_VDMA_0_DEVICE_ID);
+	XAxiVdma_DmaSetup ReadCfg;
+	status = XAxiVdma_CfgInitialize(&myVDMA, config, config->BaseAddress);
+	if(status != XST_SUCCESS){
+		xil_printf("DMA Initialization failed");
+	}
+	ReadCfg.VertSizeInput = VSize;
+	ReadCfg.HoriSizeInput = HSize*3;
+	ReadCfg.Stride = HSize*3;
+	ReadCfg.FrameDelay = 0;
+	ReadCfg.EnableCircularBuf = 1;
+	ReadCfg.EnableSync = 1;
+	ReadCfg.PointNum = 0;
+	ReadCfg.EnableFrameCounter = 0;
+	ReadCfg.FixedFrameStoreAddr = 0;
+	 status = XAxiVdma_DmaConfig(&myVDMA, XAXIVDMA_READ, &ReadCfg);
+	if (status != XST_SUCCESS) {
+		xil_printf("Write channel config failed %d\r\n", status);
+		return status;
+	}
+
+	Addr = (u32)&(Buffer[0]);
+
+	for(Index = 0; Index < myVDMA.MaxNumFrames; Index++) {
+		ReadCfg.FrameStoreStartAddr[Index] = Addr;
+		Addr +=  FrameSize;
+	}
+
+	status = XAxiVdma_DmaSetBufferAddr(&myVDMA, XAXIVDMA_READ,ReadCfg.FrameStoreStartAddr);
+	if (status != XST_SUCCESS) {
+		xil_printf("Read channel set buffer address failed %d\r\n", status);
+		return XST_FAILURE;
+	}
+
+	XAxiVdma_IntrEnable(&myVDMA, XAXIVDMA_IXR_COMPLETION_MASK, XAXIVDMA_READ);
+
+	SetupIntrSystem(&myVDMA, XPAR_FABRIC_AXI_VDMA_0_MM2S_INTROUT_INTR);
+
+	/********/
+	Xil_DCacheFlush();
+
+	status = XAxiVdma_DmaStart(&myVDMA,XAXIVDMA_READ);
+		if (status != XST_SUCCESS) {
+			if(status == XST_VDMA_MISMATCH_ERROR)
+				xil_printf("DMA Mismatch Error\r\n");
+			return XST_FAILURE;
+		}
+
+	/* threads */
 
 	sys_thread_new("main_thread", (void(*)(void*))main_thread, 0,
 			THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 
-	sys_thread_new("Game", (void(*)(void*))drawToken, 0,
-				THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
-
+	sys_thread_new("game", (void(*)(void*))testQueue, 0,
+			THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 
 	vTaskStartScheduler();
+
 	while(1);
 	return 0;
 }
-
 
 static void print_ip(char *msg, ip_addr_t *ip)
 {
@@ -175,7 +235,6 @@ void network_thread(void *p)
 
 int main_thread()
 {
-
 #if LWIP_DHCP==1
 	int mscnt = 0;
 #endif
@@ -234,10 +293,71 @@ int main_thread()
 }
 
 /* ------HDM-----*/
+static void ReadCallBack(void *CallbackRef, u32 Mask)
+{
 
+	//static int i=0;
+	/* User can add his code in this call back function */
+	/*
+	xil_printf("Read Call back function is called\r\n");
+	if(i==0){
+		memset(Buffer,0x00,FrameSize);
+		i=1;
+	}
+	else{
+		memset(Buffer,0xff,FrameSize);
+		i=0;
+	}
+	Xil_DCacheFlush();
+	sleep(1);
+	*/
+}
+
+static int SetupIntrSystem(XAxiVdma *AxiVdmaPtr, u16 ReadIntrId)
+{
+	int Status;
+	XScuGic *IntcInstancePtr =&Intc;
+
+	/* Initialize the interrupt controller and connect the ISRs */
+	XScuGic_Config *IntcConfig;
+	IntcConfig = XScuGic_LookupConfig(XPAR_PS7_SCUGIC_0_DEVICE_ID);
+	Status =  XScuGic_CfgInitialize(IntcInstancePtr, IntcConfig, IntcConfig->CpuBaseAddress);
+	if(Status != XST_SUCCESS){
+		xil_printf("Interrupt controller initialization failed..");
+		return -1;
+	}
+
+	Status = XScuGic_Connect(IntcInstancePtr,ReadIntrId,(Xil_InterruptHandler)XAxiVdma_ReadIntrHandler,(void *)AxiVdmaPtr);
+	if (Status != XST_SUCCESS) {
+		xil_printf("Failed read channel connect intc %d\r\n", Status);
+		return XST_FAILURE;
+	}
+
+	XScuGic_Enable(IntcInstancePtr,ReadIntrId);
+
+	Xil_ExceptionInit();
+	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,(Xil_ExceptionHandler)XScuGic_InterruptHandler,(void *)IntcInstancePtr);
+	Xil_ExceptionEnable();
+
+	/* Register call-back functions
+	 */
+	XAxiVdma_SetCallBack(AxiVdmaPtr, XAXIVDMA_HANDLER_GENERAL, ReadCallBack, (void *)AxiVdmaPtr, XAXIVDMA_READ);
+
+	XAxiVdma_SetCallBack(AxiVdmaPtr, XAXIVDMA_HANDLER_ERROR, ReadErrorCallBack, (void *)AxiVdmaPtr, XAXIVDMA_READ);
+
+	return XST_SUCCESS;
+}
+
+static void ReadErrorCallBack(void *CallbackRef, u32 Mask)
+{
+	/* User can add his code in this call back function */
+	xil_printf("Read Call back Error function is called\r\n");
+
+}
 
 void drawGrid(unsigned char* buffer) {
 
+	xil_printf("Entering drawGrid\n");
 	memcpy(TempBuffer, buffer, FrameSize);
     // Vul de buffer met wit
     for (int i = 0; i < VSize; ++i) {
@@ -268,15 +388,15 @@ void drawGrid(unsigned char* buffer) {
         }
     }
     memcpy(buffer, TempBuffer, FrameSize);
-
+    xil_printf("Exiting drawGrid\n");
 }
 
-void drawToken(unsigned char* buffer) {
 
-	unsigned char udp_msg[1500];
-	xQueueReceive(udp_control, udp_msg, 10);
+void drawToken(unsigned char* buffer) {
+	xil_printf("Entering drawtoken\n");
     memcpy(TempBuffer, buffer, FrameSize);
 
+    drawGrid(buffer);
 	updateStartPosition();
 
     // Teken de token voor op de positie van speler 1
@@ -316,10 +436,13 @@ void drawToken(unsigned char* buffer) {
     WinOrNot(TempBuffer);
 
     memcpy(buffer, TempBuffer, FrameSize);
+    xil_printf("exiting drawtoken\n");
 
 }
 
+
 void updateStartPosition() {
+	xil_printf("start updatepos\n");
     if (positionPlayer1 >= 0 && positionPlayer1 < 4) {
         if (CheckRooster[positionPlayer1] == 0) {
         	CheckRooster[positionPlayer1] += 1;
@@ -363,10 +486,14 @@ void updateStartPosition() {
         	xil_printf("value must be 0 till 3, value is now:%d\r\n", positionPlayer2);
         }
     }
+    xil_printf("exiting updatepos\n");
 }
+
+
 
 void WinOrNot(unsigned char* TempBuffer) {
 
+	xil_printf("Entering winlose\n");
 	//check alle horizontale lijnen player1
 	for (int i = 0; i <= 12; i+=4) {
 		if (WinnerCheck[i]==1 && WinnerCheck[i+1] ==1 && WinnerCheck[i+2]==1 && WinnerCheck[i+3]==1){
@@ -413,9 +540,15 @@ void WinOrNot(unsigned char* TempBuffer) {
 		xil_printf("winner is player 2\r\n");
 		drawWinningSquare(TempBuffer, 2);
 	}
+	xil_printf("exit winlose\n");
 }
 
+
+
+
 void drawWinningSquare(unsigned char* buffer, int color) {
+
+	xil_printf("Entering drawwin\n");
 
 	memcpy(TempBuffer, buffer, FrameSize);
 
@@ -452,8 +585,268 @@ void drawWinningSquare(unsigned char* buffer, int color) {
         // Ververs het scherm
         Xil_DCacheFlush();
     }
+	xil_printf("exit drawwin\n");
 }
 
-/* ------------------ */
+
+
+void testQueue(void *pvParameters) {
+	char udp_msg[1500];
+	if (xQueueReceive(udp_control, udp_msg, portMAX_DELAY) == pdTRUE) {
+			xil_printf("test queue: %s", udp_msg);
+			sscanf(udp_msg, "player1: %d ; player2: %d",
+							&(positionPlayer1), &(positionPlayer2));
+			xil_printf("test pl1: %d\r\n", positionPlayer1);
+			xil_printf("test pl2: %d\r\n", positionPlayer2);
+
+			drawToken(Buffer);
+	}
+	else
+	{
+			xil_printf("Queue is empty.\n");
+	}
+
+}
+
+
+
+void game(unsigned char* buffer){
+
+
+	char udp_msg[1500];
+		if (xQueueReceive(udp_control, udp_msg, portMAX_DELAY) == pdTRUE) {
+			xil_printf("test queue: %s", udp_msg);
+			sscanf(udp_msg, "player1: %d ; player2: %d",
+							&(positionPlayer1), &(positionPlayer2));
+			xil_printf("test pl1: %d\r\n", positionPlayer1);
+			xil_printf("test pl2: %d\r\n", positionPlayer2);
+
+			/*************/
+
+
+			xil_printf("Entering drawGrid\n");
+			//memcpy(TempBuffer, buffer, FrameSize);
+			// Vul de buffer met wit
+			for (int i = 0; i < VSize; ++i) {
+				for (int j = 0; j < HSize * 3; j = j + 3) {
+					buffer[(i * HSize * 3) + j] = 0xff;     // G
+					buffer[(i * HSize * 3) + j + 1] = 0xff; // B
+					buffer[(i * HSize * 3) + j + 2] = 0xff; // R
+				}
+			}
+			xil_printf(" drawGrid 1 \n");
+			// Teken horizontale lijnen
+			for (int i = 1; i <= vierOpEenRij - 1; ++i) {
+				int yPos = i * CellHeight - 5; // Aanpassen voor centrering van de lijn
+				for (int j = 0; j < HSize * 3; j = j + 3) {
+					buffer[(yPos * HSize * 3) + j] = 0x00;     // G (zwart)
+					buffer[(yPos * HSize * 3) + j + 1] = 0x00; // B (zwart)
+					buffer[(yPos * HSize * 3) + j + 2] = 0x00; // R (zwart)
+				}
+			}
+			xil_printf("Exiting drawGrid 2 \n");
+
+			// Teken verticale lijnen
+			for (int i = 1; i <= vierOpEenRij - 1; ++i) {
+				int xPos = i * CellWidth - 5; // Aanpassen voor centrering van de lijn
+				for (int j = 0; j < VSize; ++j) {
+					buffer[(j * HSize * 3) + (xPos * 3)] = 0x00;     // G (zwart)
+					buffer[(j * HSize * 3) + (xPos * 3) + 1] = 0x00; // B (zwart)
+					buffer[(j * HSize * 3) + (xPos * 3) + 2] = 0x00; // R (zwart)
+				}
+			}
+
+			xil_printf("Exiting drawGrid\n");
+
+
+			/*************/
+
+			xil_printf("Entering drawtoken\n");
+
+
+			/*******/
+
+
+			xil_printf("start updatepos\n");
+			if (positionPlayer1 >= 0 && positionPlayer1 < 4) {
+				if (CheckRooster[positionPlayer1] == 0) {
+					CheckRooster[positionPlayer1] += 1;
+					positionPlayer1 +=12;
+				}
+				else if (CheckRooster[positionPlayer1] == 1) {
+					CheckRooster[positionPlayer1] += 1;
+					positionPlayer1 +=8;
+				}
+				else if (CheckRooster[positionPlayer1] == 2) {
+					CheckRooster[positionPlayer1] += 1;
+					positionPlayer1 +=4;
+				}
+				else if (CheckRooster[positionPlayer1] == 3) {
+					CheckRooster[positionPlayer1] += 1;
+					//waarde blijft 0
+				}
+				else{
+					xil_printf("value must be 0 till 3, value is now:%d\r\n", positionPlayer1);
+				}
+			}
+
+			if (positionPlayer2 >= 0 && positionPlayer2 < 4) {
+				if (CheckRooster[positionPlayer2] == 0) {
+					CheckRooster[positionPlayer2] += 1;
+					positionPlayer2 +=12;
+				}
+				else if (CheckRooster[positionPlayer2] == 1) {
+					CheckRooster[positionPlayer2] += 1;
+					positionPlayer2 +=8;
+				}
+				else if (CheckRooster[positionPlayer2] == 2) {
+					CheckRooster[positionPlayer2] += 1;
+					positionPlayer2 +=4;
+				}
+				else if (CheckRooster[positionPlayer2] == 3) {
+					CheckRooster[positionPlayer2] += 1;
+					//waarde blijft 0
+				}
+				else{
+					xil_printf("value must be 0 till 3, value is now:%d\r\n", positionPlayer2);
+				}
+			}
+			xil_printf("exiting updatepos\n");
+
+
+			/********/
+
+			// Teken de token voor op de positie van speler 1
+			int xStartX = (positionPlayer1 % vierOpEenRij) * CellWidth;
+			int yStartX = (positionPlayer1 / vierOpEenRij) * CellHeight;
+			int halfCellWidthX = CellWidth / 2;
+			int halfCellHeightX = CellHeight / 2;
+			int startX_X = xStartX + (CellWidth - halfCellWidthX) / 2;
+			int startY_X = yStartX + (CellHeight - halfCellHeightX) / 2;
+			for (int i = 0; i < halfCellHeightX; ++i) {
+				for (int j = 0; j < halfCellWidthX; ++j) {
+					int bufferIndex = ((startY_X + i) * HSize + (startX_X + j)) * 3;
+					buffer[bufferIndex] = 0xff;     // G (zwart)
+					buffer[bufferIndex + 1] = 0x00; // B (zwart)
+					buffer[bufferIndex + 2] = 0xff; // R (zwart)
+				}
+			}
+
+			// Teken de token voor op de positie van speler 2
+			int xStartO = (positionPlayer2 % vierOpEenRij) * CellWidth;
+			int yStartO = (positionPlayer2 / vierOpEenRij) * CellHeight;
+			int halfCellWidthO = CellWidth / 2;
+			int halfCellHeightO = CellHeight / 2;
+			int startX_O = xStartO + (CellWidth - halfCellWidthO) / 2;
+			int startY_O = yStartO + (CellHeight - halfCellHeightO) / 2;
+			for (int i = 0; i < halfCellHeightO; ++i) {
+				for (int j = 0; j < halfCellWidthO; ++j) {
+					int bufferIndex = ((startY_O + i) * HSize + (startX_O + j)) * 3;
+					buffer[bufferIndex] = 0x00;     // G (zwart)
+					buffer[bufferIndex + 1] = 0x00; // B (zwart)
+					buffer[bufferIndex + 2] = 0xff; // R (zwart)
+				}
+			}
+
+			WinnerCheck[positionPlayer1]=1;
+			WinnerCheck[positionPlayer2]=2;
+
+			/*****/
+
+
+			xil_printf("Entering winlose\n");
+			//check alle horizontale lijnen player1
+			for (int i = 0; i <= 12; i+=4) {
+				if (WinnerCheck[i]==1 && WinnerCheck[i+1] ==1 && WinnerCheck[i+2]==1 && WinnerCheck[i+3]==1){
+					WinnerCheck[16] = 1;
+				}
+			}
+			//check alle horizontale lijnen player2
+			for (int i = 0; i <= 12; i+=4) {
+				if (WinnerCheck[i]==2 && WinnerCheck[i+1] ==2 && WinnerCheck[i+2]==2 && WinnerCheck[i+3]==2){
+					WinnerCheck[16] = 2;
+				}
+			}
+			//check alle verticale lijnen player1
+			for (int i = 0; i <= 4; i++) {
+				if (WinnerCheck[i]==1 && WinnerCheck[i+4] ==1 && WinnerCheck[i+8]==1 && WinnerCheck[i+12]==1){
+					WinnerCheck[16] = 1;
+				}
+			}
+			//check alle verticale lijnen player2
+			for (int i = 0; i <= 4; i++) {
+				if (WinnerCheck[i]==2 && WinnerCheck[i+4] ==2 && WinnerCheck[i+8]==2 && WinnerCheck[i+12]==2){
+					WinnerCheck[16] = 2;
+				}
+			}
+			//diagonaal
+			if (WinnerCheck[0] == 1 && WinnerCheck[5] == 1 && WinnerCheck[10] == 1 && WinnerCheck[15] == 1 ){
+				WinnerCheck[16] = 1;
+			}
+			if (WinnerCheck[0] == 2 && WinnerCheck[5] == 2 && WinnerCheck[10] == 2 && WinnerCheck[15] == 2 ){
+				WinnerCheck[16] = 2;
+			}
+			if (WinnerCheck[3] == 1 && WinnerCheck[6] == 1 && WinnerCheck[9] == 1 && WinnerCheck[12] == 1 ){
+				WinnerCheck[16] = 1;
+			}
+			if (WinnerCheck[3] == 2 && WinnerCheck[6] == 2 && WinnerCheck[9] == 2 && WinnerCheck[12] == 2 ){
+				WinnerCheck[16] = 2;
+			}
+
+			if (WinnerCheck[16] == 1 || WinnerCheck[16] == 2 ){
+				xil_printf("winner\r\n");
+
+				/*****/
+
+
+			xil_printf("Entering drawwin\n");
+
+			int centerX = HSize / 2;
+			int centerY = VSize / 2;
+			int squareSize = 10; // Startgrootte van het vierkant
+
+			// Loop om het vierkant te tekenen en te laten groeien
+			for (int size = squareSize; size < 100; size += 5) {
+				for (int i = -size / 2; i < size / 2; ++i) {
+					for (int j = -size / 2; j < size / 2; ++j) {
+						int x = centerX + i;
+						int y = centerY + j;
+						if (x >= 0 && x < HSize && y >= 0 && y < VSize) {
+							int bufferIndex = (y * HSize + x) * 3;
+							if (WinnerCheck[16] == 1) {
+								// Geel vierkant
+								buffer[bufferIndex] = 0xff;     // G
+								buffer[bufferIndex + 1] = 0xff; // B
+								buffer[bufferIndex + 2] = 0x00; // R
+							} else {
+								// Rood vierkant
+								buffer[bufferIndex] = 0x00;     // G
+								buffer[bufferIndex + 1] = 0x00; // B
+								buffer[bufferIndex + 2] = 0xff; // R
+							}
+						}
+					}
+				}
+			}
+			xil_printf("exit drawwin\n");
+
+
+				/******/
+			}
+
+			xil_printf("exit winlose\n");
+
+			/*****/
+
+			//memcpy(buffer, TempBuffer, FrameSize);
+			Xil_DCacheFlush();
+			xil_printf("exiting drawtoken\n");
+		}
+		else
+		{
+				xil_printf("Queue is empty.\n");
+		}
+}
+
 
 

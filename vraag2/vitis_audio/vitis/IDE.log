@@ -4580,3 +4580,12 @@ con
 20:41:11 INFO  : Registering command handlers for Vitis TCF services
 20:41:11 INFO  : Platform repository initialization has completed.
 20:41:13 INFO  : Successfully done query RDI_DATADIR 
+14:19:18 DEBUG : Logs will be stored at 'C:/Users/boghe/EOS_opdracht3eai/vraag2/vitis_audio/vitis/IDE.log'.
+14:19:19 INFO  : Launching XSCT server: xsct.bat -n  -interactive C:\Users\boghe\EOS_opdracht3eai\vraag2\vitis_audio\vitis\temp_xsdb_launch_script.tcl
+14:19:23 INFO  : XSCT server has started successfully.
+14:19:23 INFO  : Successfully done setting XSCT server connection channel  
+14:19:23 INFO  : plnx-install-location is set to ''
+14:19:23 INFO  : Successfully done setting workspace for the tool. 
+14:19:29 INFO  : Registering command handlers for Vitis TCF services
+14:19:29 INFO  : Platform repository initialization has completed.
+14:19:32 INFO  : Successfully done query RDI_DATADIR 
