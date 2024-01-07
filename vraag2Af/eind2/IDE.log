@@ -1,0 +1,489 @@
+18:16:59 DEBUG : Logs will be stored at 'D:/Embedded_Systemen/HW_EOS/eind2/IDE.log'.
+18:17:05 INFO  : Registering command handlers for Vitis TCF services
+18:17:05 INFO  : Launching XSCT server: xsct.bat -n  -interactive D:\Embedded_Systemen\HW_EOS\eind2\temp_xsdb_launch_script.tcl
+18:17:06 INFO  : Platform repository initialization has completed.
+18:17:08 INFO  : XSCT server has started successfully.
+18:17:08 INFO  : plnx-install-location is set to ''
+18:17:08 INFO  : Successfully done setting XSCT server connection channel  
+18:17:08 INFO  : Successfully done query RDI_DATADIR 
+18:17:08 INFO  : Successfully done setting workspace for the tool. 
+18:18:53 INFO  : Result from executing command 'getProjects': design_1_wrapper
+18:18:53 INFO  : Result from executing command 'getPlatforms': xilinx_zcu102_base_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu102_base_202310_1/xilinx_zcu102_base_202310_1.xpfm;xilinx_zcu102_base_dfx_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu102_base_dfx_202310_1/xilinx_zcu102_base_dfx_202310_1.xpfm;xilinx_zcu104_base_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu104_base_202310_1/xilinx_zcu104_base_202310_1.xpfm
+18:18:55 WARN  : An unexpected exception occurred in the module 'platform project logging'
+18:18:59 INFO  : Platform 'design_1_wrapper' is added to custom repositories.
+18:19:14 INFO  : Platform 'design_1_wrapper' is added to custom repositories.
+18:20:42 INFO  : Result from executing command 'getProjects': design_1_wrapper
+18:20:42 INFO  : Result from executing command 'getPlatforms': design_1_wrapper|D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/design_1_wrapper.xpfm;xilinx_zcu102_base_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu102_base_202310_1/xilinx_zcu102_base_202310_1.xpfm;xilinx_zcu102_base_dfx_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu102_base_dfx_202310_1/xilinx_zcu102_base_dfx_202310_1.xpfm;xilinx_zcu104_base_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu104_base_202310_1/xilinx_zcu104_base_202310_1.xpfm
+18:20:43 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+20:36:43 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+21:06:52 DEBUG : Logs will be stored at 'D:/Embedded_Systemen/HW_EOS/eind2/IDE.log'.
+21:06:53 INFO  : Launching XSCT server: xsct.bat -n  -interactive D:\Embedded_Systemen\HW_EOS\eind2\temp_xsdb_launch_script.tcl
+21:06:57 INFO  : XSCT server has started successfully.
+21:06:57 INFO  : plnx-install-location is set to ''
+21:06:57 INFO  : Successfully done setting XSCT server connection channel  
+21:06:57 INFO  : Successfully done setting workspace for the tool. 
+21:06:58 INFO  : Registering command handlers for Vitis TCF services
+21:06:58 INFO  : Successfully done query RDI_DATADIR 
+21:06:59 INFO  : Platform repository initialization has completed.
+21:20:21 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+21:34:21 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+21:34:52 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+21:35:24 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+21:38:49 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+21:38:50 INFO  : Jtag cable 'Xilinx TUL 1234-tulA' is selected.
+21:38:50 INFO  : 'jtag frequency' command is executed.
+21:38:50 INFO  : Context for 'APU' is selected.
+21:38:50 INFO  : System reset is completed.
+21:38:53 INFO  : 'after 3000' command is executed.
+21:38:54 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}' command is executed.
+21:38:56 INFO  : Device configured successfully with "D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit"
+21:38:56 INFO  : Context for 'APU' is selected.
+21:38:56 INFO  : Hardware design and registers information is loaded from 'D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+21:38:56 INFO  : 'configparams force-mem-access 1' command is executed.
+21:38:56 INFO  : Context for 'APU' is selected.
+21:38:56 INFO  : Sourcing of 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl' is done.
+21:38:57 INFO  : 'ps7_init' command is executed.
+21:38:57 INFO  : 'ps7_post_config' command is executed.
+21:38:57 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+21:38:58 INFO  : The application 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf' is downloaded to processor 'ps7_cortexa9_0'.
+21:38:58 INFO  : 'configparams force-mem-access 0' command is executed.
+21:38:58 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}
+fpga -file D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+21:38:58 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+21:38:58 INFO  : 'con' command is executed.
+21:38:58 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+21:38:58 INFO  : Launch script is exported to file 'D:\Embedded_Systemen\HW_EOS\eind2\eindopdr2_system\_ide\scripts\debugger_eindopdr2-default.tcl'
+21:43:10 INFO  : Disconnected from the channel tcfchan#1.
+21:46:08 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+21:46:09 INFO  : Jtag cable 'Xilinx TUL 1234-tulA' is selected.
+21:46:09 INFO  : 'jtag frequency' command is executed.
+21:46:09 INFO  : Context for 'APU' is selected.
+21:46:09 INFO  : System reset is completed.
+21:46:12 INFO  : 'after 3000' command is executed.
+21:46:12 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}' command is executed.
+21:46:14 INFO  : Device configured successfully with "D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit"
+21:46:15 INFO  : Context for 'APU' is selected.
+21:46:18 INFO  : Hardware design and registers information is loaded from 'D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+21:46:18 INFO  : 'configparams force-mem-access 1' command is executed.
+21:46:18 INFO  : Context for 'APU' is selected.
+21:46:18 INFO  : Sourcing of 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl' is done.
+21:46:18 INFO  : 'ps7_init' command is executed.
+21:46:18 INFO  : 'ps7_post_config' command is executed.
+21:46:18 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+21:46:19 INFO  : The application 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf' is downloaded to processor 'ps7_cortexa9_0'.
+21:46:19 INFO  : 'configparams force-mem-access 0' command is executed.
+21:46:19 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}
+fpga -file D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+21:46:19 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+21:46:19 INFO  : 'con' command is executed.
+21:46:19 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+21:46:19 INFO  : Launch script is exported to file 'D:\Embedded_Systemen\HW_EOS\eind2\eindopdr2_system\_ide\scripts\debugger_eindopdr2-default.tcl'
+21:53:00 INFO  : Disconnected from the channel tcfchan#2.
+21:54:20 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+21:54:21 INFO  : Jtag cable 'Xilinx TUL 1234-tulA' is selected.
+21:54:21 INFO  : 'jtag frequency' command is executed.
+21:54:21 INFO  : Context for 'APU' is selected.
+21:54:21 INFO  : System reset is completed.
+21:54:24 INFO  : 'after 3000' command is executed.
+21:54:24 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}' command is executed.
+21:54:26 INFO  : Device configured successfully with "D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit"
+21:54:26 INFO  : Context for 'APU' is selected.
+21:54:30 INFO  : Hardware design and registers information is loaded from 'D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+21:54:30 INFO  : 'configparams force-mem-access 1' command is executed.
+21:54:30 INFO  : Context for 'APU' is selected.
+21:54:30 INFO  : Sourcing of 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl' is done.
+21:54:31 INFO  : 'ps7_init' command is executed.
+21:54:31 INFO  : 'ps7_post_config' command is executed.
+21:54:31 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+21:54:32 INFO  : The application 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf' is downloaded to processor 'ps7_cortexa9_0'.
+21:54:32 INFO  : 'configparams force-mem-access 0' command is executed.
+21:54:32 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}
+fpga -file D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+21:54:32 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+21:54:32 INFO  : 'con' command is executed.
+21:54:32 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+21:54:32 INFO  : Launch script is exported to file 'D:\Embedded_Systemen\HW_EOS\eind2\eindopdr2_system\_ide\scripts\debugger_eindopdr2-default.tcl'
+21:56:11 INFO  : Disconnected from the channel tcfchan#3.
+21:59:13 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+22:01:08 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+22:02:05 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+22:02:06 INFO  : Jtag cable 'Xilinx TUL 1234-tulA' is selected.
+22:02:06 INFO  : 'jtag frequency' command is executed.
+22:02:06 INFO  : Context for 'APU' is selected.
+22:02:06 INFO  : System reset is completed.
+22:02:09 INFO  : 'after 3000' command is executed.
+22:02:10 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}' command is executed.
+22:02:12 INFO  : Device configured successfully with "D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit"
+22:02:12 INFO  : Context for 'APU' is selected.
+22:02:12 INFO  : Hardware design and registers information is loaded from 'D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+22:02:12 INFO  : 'configparams force-mem-access 1' command is executed.
+22:02:12 INFO  : Context for 'APU' is selected.
+22:02:12 INFO  : Sourcing of 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl' is done.
+22:02:13 INFO  : 'ps7_init' command is executed.
+22:02:13 INFO  : 'ps7_post_config' command is executed.
+22:02:13 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+22:02:14 INFO  : The application 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf' is downloaded to processor 'ps7_cortexa9_0'.
+22:02:14 INFO  : 'configparams force-mem-access 0' command is executed.
+22:02:14 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}
+fpga -file D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+22:02:14 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+22:02:15 INFO  : 'con' command is executed.
+22:02:15 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+22:02:15 INFO  : Launch script is exported to file 'D:\Embedded_Systemen\HW_EOS\eind2\eindopdr2_system\_ide\scripts\debugger_eindopdr2-default.tcl'
+22:02:54 INFO  : Disconnected from the channel tcfchan#4.
+22:02:58 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+22:05:11 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+22:05:21 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+22:05:22 INFO  : Jtag cable 'Xilinx TUL 1234-tulA' is selected.
+22:05:22 INFO  : 'jtag frequency' command is executed.
+22:05:22 INFO  : Context for 'APU' is selected.
+22:05:22 INFO  : System reset is completed.
+22:05:25 INFO  : 'after 3000' command is executed.
+22:05:25 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}' command is executed.
+22:05:27 INFO  : Device configured successfully with "D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit"
+22:05:27 INFO  : Context for 'APU' is selected.
+22:05:27 INFO  : Hardware design and registers information is loaded from 'D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+22:05:27 INFO  : 'configparams force-mem-access 1' command is executed.
+22:05:27 INFO  : Context for 'APU' is selected.
+22:05:28 INFO  : Sourcing of 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl' is done.
+22:05:28 INFO  : 'ps7_init' command is executed.
+22:05:28 INFO  : 'ps7_post_config' command is executed.
+22:05:28 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+22:05:29 INFO  : The application 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf' is downloaded to processor 'ps7_cortexa9_0'.
+22:05:29 INFO  : 'configparams force-mem-access 0' command is executed.
+22:05:29 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}
+fpga -file D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+22:05:29 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+22:05:29 INFO  : 'con' command is executed.
+22:05:29 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+22:05:29 INFO  : Launch script is exported to file 'D:\Embedded_Systemen\HW_EOS\eind2\eindopdr2_system\_ide\scripts\debugger_eindopdr2-default.tcl'
+22:06:30 INFO  : Disconnected from the channel tcfchan#5.
+22:06:34 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+22:06:49 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+22:06:49 INFO  : Jtag cable 'Xilinx TUL 1234-tulA' is selected.
+22:06:49 INFO  : 'jtag frequency' command is executed.
+22:06:50 INFO  : Context for 'APU' is selected.
+22:06:50 INFO  : System reset is completed.
+22:06:53 INFO  : 'after 3000' command is executed.
+22:06:53 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}' command is executed.
+22:06:55 INFO  : Device configured successfully with "D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit"
+22:06:55 INFO  : Context for 'APU' is selected.
+22:06:55 INFO  : Hardware design and registers information is loaded from 'D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+22:06:55 INFO  : 'configparams force-mem-access 1' command is executed.
+22:06:55 INFO  : Context for 'APU' is selected.
+22:06:55 INFO  : Sourcing of 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl' is done.
+22:06:56 INFO  : 'ps7_init' command is executed.
+22:06:56 INFO  : 'ps7_post_config' command is executed.
+22:06:56 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+22:06:57 INFO  : The application 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf' is downloaded to processor 'ps7_cortexa9_0'.
+22:06:57 INFO  : 'configparams force-mem-access 0' command is executed.
+22:06:57 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}
+fpga -file D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+22:06:57 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+22:06:57 INFO  : 'con' command is executed.
+22:06:57 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+22:06:57 INFO  : Launch script is exported to file 'D:\Embedded_Systemen\HW_EOS\eind2\eindopdr2_system\_ide\scripts\debugger_eindopdr2-default.tcl'
+22:07:48 INFO  : Disconnected from the channel tcfchan#6.
+22:07:51 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+22:12:46 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+22:14:04 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+22:14:24 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+22:14:25 INFO  : Jtag cable 'Xilinx TUL 1234-tulA' is selected.
+22:14:25 INFO  : 'jtag frequency' command is executed.
+22:14:25 INFO  : Context for 'APU' is selected.
+22:14:25 INFO  : System reset is completed.
+22:14:28 INFO  : 'after 3000' command is executed.
+22:14:28 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}' command is executed.
+22:14:31 INFO  : Device configured successfully with "D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit"
+22:14:31 INFO  : Context for 'APU' is selected.
+22:14:31 INFO  : Hardware design and registers information is loaded from 'D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+22:14:31 INFO  : 'configparams force-mem-access 1' command is executed.
+22:14:31 INFO  : Context for 'APU' is selected.
+22:14:31 INFO  : Sourcing of 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl' is done.
+22:14:32 INFO  : 'ps7_init' command is executed.
+22:14:32 INFO  : 'ps7_post_config' command is executed.
+22:14:32 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+22:14:34 INFO  : The application 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf' is downloaded to processor 'ps7_cortexa9_0'.
+22:14:34 INFO  : 'configparams force-mem-access 0' command is executed.
+22:14:34 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}
+fpga -file D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+22:14:34 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+22:14:34 INFO  : 'con' command is executed.
+22:14:34 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+22:14:34 INFO  : Launch script is exported to file 'D:\Embedded_Systemen\HW_EOS\eind2\eindopdr2_system\_ide\scripts\debugger_eindopdr2-default.tcl'
+22:17:08 INFO  : Disconnected from the channel tcfchan#7.
+12:26:44 DEBUG : Logs will be stored at 'D:/Embedded_Systemen/HW_EOS/eind2/IDE.log'.
+12:26:50 INFO  : Launching XSCT server: xsct.bat -n  -interactive D:\Embedded_Systemen\HW_EOS\eind2\temp_xsdb_launch_script.tcl
+12:27:12 INFO  : XSCT server has started successfully.
+12:27:13 INFO  : plnx-install-location is set to ''
+12:27:13 INFO  : Successfully done setting XSCT server connection channel  
+12:27:13 INFO  : Successfully done setting workspace for the tool. 
+13:08:32 INFO  : Registering command handlers for Vitis TCF services
+13:08:33 INFO  : Platform repository initialization has completed.
+13:08:36 INFO  : Successfully done query RDI_DATADIR 
+13:13:08 INFO  : Result from executing command 'getProjects': design_1_wrapper;design_1_wrapper_1
+13:13:08 INFO  : Result from executing command 'getPlatforms': design_1_wrapper|D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/design_1_wrapper.xpfm;xilinx_zcu102_base_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu102_base_202310_1/xilinx_zcu102_base_202310_1.xpfm;xilinx_zcu102_base_dfx_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu102_base_dfx_202310_1/xilinx_zcu102_base_dfx_202310_1.xpfm;xilinx_zcu104_base_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu104_base_202310_1/xilinx_zcu104_base_202310_1.xpfm
+13:13:10 WARN  : An unexpected exception occurred in the module 'platform project logging'
+13:13:14 INFO  : Platform 'design_1_wrapper_1' is added to custom repositories.
+13:13:31 INFO  : Platform 'design_1_wrapper_1' is added to custom repositories.
+13:31:20 ERROR : An unexpected exception occurred in the module 'reading platform'
+13:32:36 INFO  : Result from executing command 'getProjects': design_1_wrapper;design_1_wrapper_1
+13:32:36 INFO  : Result from executing command 'getPlatforms': xilinx_zcu102_base_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu102_base_202310_1/xilinx_zcu102_base_202310_1.xpfm;xilinx_zcu102_base_dfx_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu102_base_dfx_202310_1/xilinx_zcu102_base_dfx_202310_1.xpfm;xilinx_zcu104_base_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu104_base_202310_1/xilinx_zcu104_base_202310_1.xpfm
+13:32:42 INFO  : Platform 'design_1_wrapper_1' is added to custom repositories.
+13:33:01 INFO  : Platform 'design_1_wrapper_1' is added to custom repositories.
+13:40:05 INFO  : Checking for BSP changes to sync application flags for project 'audio_app'...
+13:40:08 INFO  : Updating application flags with new BSP settings...
+13:40:08 INFO  : Successfully updated application flags for project audio_app.
+13:40:10 INFO  : The hardware specification used by project 'audio_app' is out of sync with the platform. Resource files extracted from the hardware specification will be updated.
+13:40:10 INFO  : The file 'D:\Embedded_Systemen\HW_EOS\eind2\audio_app\_ide\bitstream\design_1_wrapper2.bit' stored in project is removed.
+13:40:10 INFO  : The updated bitstream files are copied from platform to folder 'D:\Embedded_Systemen\HW_EOS\eind2\audio_app\_ide\bitstream' in project 'audio_app'.
+13:40:10 INFO  : The file 'D:\Embedded_Systemen\HW_EOS\eind2\audio_app\_ide\psinit\ps7_init.tcl' stored in project is removed.
+13:40:17 INFO  : The updated ps init files are copied from platform to folder 'D:\Embedded_Systemen\HW_EOS\eind2\audio_app\_ide\psinit' in project 'audio_app'.
+13:40:18 INFO  : Build configuration of 'audio_app_system' is updated to 'Release'
+13:40:18 INFO  : Build configuration of system project is automatically updated to 'Release'.
+13:47:45 INFO  : Result from executing command 'getProjects': design_1_wrapper;design_1_wrapper_1
+13:47:45 INFO  : Result from executing command 'getPlatforms': design_1_wrapper_1|D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper_1/export/design_1_wrapper_1/design_1_wrapper_1.xpfm;design_1_wrapper|D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/design_1_wrapper.xpfm;xilinx_zcu102_base_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu102_base_202310_1/xilinx_zcu102_base_202310_1.xpfm;xilinx_zcu102_base_dfx_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu102_base_dfx_202310_1/xilinx_zcu102_base_dfx_202310_1.xpfm;xilinx_zcu104_base_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu104_base_202310_1/xilinx_zcu104_base_202310_1.xpfm
+13:47:47 INFO  : Checking for BSP changes to sync application flags for project 'audio_app'...
+13:48:25 INFO  : Result from executing command 'getProjects': design_1_wrapper;design_1_wrapper_1
+13:48:25 INFO  : Result from executing command 'getPlatforms': design_1_wrapper_1|D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper_1/export/design_1_wrapper_1/design_1_wrapper_1.xpfm;design_1_wrapper|D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/design_1_wrapper.xpfm;xilinx_zcu102_base_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu102_base_202310_1/xilinx_zcu102_base_202310_1.xpfm;xilinx_zcu102_base_dfx_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu102_base_dfx_202310_1/xilinx_zcu102_base_dfx_202310_1.xpfm;xilinx_zcu104_base_202310_1|C:/Xilinx/Vitis/2023.1/base_platforms/xilinx_zcu104_base_202310_1/xilinx_zcu104_base_202310_1.xpfm
+13:48:27 INFO  : Checking for BSP changes to sync application flags for project 'audio_app'...
+14:05:23 INFO  : Checking for BSP changes to sync application flags for project 'eindopdr2'...
+14:06:45 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+14:06:46 INFO  : Jtag cable 'Xilinx TUL 1234-tulA' is selected.
+14:06:46 INFO  : 'jtag frequency' command is executed.
+14:06:46 INFO  : Context for 'APU' is selected.
+14:06:46 INFO  : System reset is completed.
+14:06:49 INFO  : 'after 3000' command is executed.
+14:06:49 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}' command is executed.
+14:06:51 INFO  : Device configured successfully with "D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit"
+14:06:51 INFO  : Context for 'APU' is selected.
+14:06:51 INFO  : Hardware design and registers information is loaded from 'D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+14:06:51 INFO  : 'configparams force-mem-access 1' command is executed.
+14:06:51 INFO  : Context for 'APU' is selected.
+14:06:51 INFO  : Sourcing of 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl' is done.
+14:06:52 INFO  : 'ps7_init' command is executed.
+14:06:52 INFO  : 'ps7_post_config' command is executed.
+14:06:52 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+14:06:53 INFO  : The application 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf' is downloaded to processor 'ps7_cortexa9_0'.
+14:06:53 INFO  : 'configparams force-mem-access 0' command is executed.
+14:06:53 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}
+fpga -file D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+14:06:53 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+14:06:53 INFO  : 'con' command is executed.
+14:06:53 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+14:06:53 INFO  : Launch script is exported to file 'D:\Embedded_Systemen\HW_EOS\eind2\eindopdr2_system\_ide\scripts\debugger_eindopdr2-default_1.tcl'
+14:07:24 INFO  : Disconnected from the channel tcfchan#3.
+14:08:13 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+14:08:14 INFO  : Jtag cable 'Xilinx TUL 1234-tulA' is selected.
+14:08:14 INFO  : 'jtag frequency' command is executed.
+14:08:14 INFO  : Context for 'APU' is selected.
+14:08:14 INFO  : System reset is completed.
+14:08:17 INFO  : 'after 3000' command is executed.
+14:08:17 INFO  : 'targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}' command is executed.
+14:08:19 INFO  : Device configured successfully with "D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit"
+14:08:19 INFO  : Context for 'APU' is selected.
+14:08:19 INFO  : Hardware design and registers information is loaded from 'D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa'.
+14:08:19 INFO  : 'configparams force-mem-access 1' command is executed.
+14:08:19 INFO  : Context for 'APU' is selected.
+14:08:19 INFO  : Sourcing of 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl' is done.
+14:08:20 INFO  : 'ps7_init' command is executed.
+14:08:20 INFO  : 'ps7_post_config' command is executed.
+14:08:20 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+14:08:21 INFO  : The application 'D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf' is downloaded to processor 'ps7_cortexa9_0'.
+14:08:21 INFO  : 'configparams force-mem-access 0' command is executed.
+14:08:21 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Xilinx TUL 1234-tulA" && level==0 && jtag_device_ctx=="jsn-TUL-1234-tulA-23727093-0"}
+fpga -file D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/bitstream/design_1_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw D:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/hw/design_1_wrapper.xsa -mem-ranges [list {0x40000000 0xbfffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+source D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/_ide/psinit/ps7_init.tcl
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "*A9*#0"}
+dow D:/Embedded_Systemen/HW_EOS/eind2/eindopdr2/Debug/eindopdr2.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+14:08:21 INFO  : Context for processor 'ps7_cortexa9_0' is selected.
+14:08:21 INFO  : 'con' command is executed.
+14:08:21 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A9*#0"}
+con
+----------------End of Script----------------
+
+14:08:21 INFO  : Launch script is exported to file 'D:\Embedded_Systemen\HW_EOS\eind2\eindopdr2_system\_ide\scripts\debugger_eindopdr2-default_1.tcl'
+14:09:54 INFO  : Disconnected from the channel tcfchan#4.

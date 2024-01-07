@@ -1,0 +1,29 @@
+Nothing to build in platform 'design_1_wrapper'
+
+14:05:23 **** Incremental Build of configuration Debug for project eindopdr2 ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/sw/design_1_wrapper/freertos10_xilinx_ps7_cortexa9_0/bspinclude/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+'Finished building: ../src/main.c'
+' '
+'Building file: ../src/udp_perf_server.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/udp_perf_server.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/sw/design_1_wrapper/freertos10_xilinx_ps7_cortexa9_0/bspinclude/include -MMD -MP -MF"src/udp_perf_server.d" -MT"src/udp_perf_server.o" -o "src/udp_perf_server.o" "../src/udp_perf_server.c"
+'Finished building: ../src/udp_perf_server.c'
+' '
+'Building target: eindopdr2.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LD:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/sw/design_1_wrapper/freertos10_xilinx_ps7_cortexa9_0/bsplib/lib -o "eindopdr2.elf"  ./src/iic_phyreset.o ./src/main.o ./src/udp_perf_server.o   -Wl,--start-group,-lxil,-lfreertos,-lgcc,-lc,--end-group -Wl,--start-group,-lxil,-llwip4,-lgcc,-lc,--end-group
+'Finished building target: eindopdr2.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size eindopdr2.elf  |tee "eindopdr2.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+ 206537	   3412	41023552	41233501	2752c5d	eindopdr2.elf
+'Finished building: eindopdr2.elf.size'
+' '

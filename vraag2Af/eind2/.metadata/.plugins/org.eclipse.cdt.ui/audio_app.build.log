@@ -1,0 +1,27 @@
+13:48:27 **** Incremental Build of configuration Release for project audio_app ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/freertos_hello_world.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/freertos_hello_world.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -ID:/Embedded_Systemen/HW_EOS/eind2/design_1_wrapper/export/design_1_wrapper/sw/design_1_wrapper/freertos10_xilinx_ps7_cortexa9_0/bspinclude/include -MMD -MP -MF"src/freertos_hello_world.d" -MT"src/freertos_hello_world.o" -o "src/freertos_hello_world.o" "../src/freertos_hello_world.c"
+In file included from ../src/freertos_hello_world.c:14:
+../src/audio.h:7:49: error: 'XPAR_AUDIO_CODEC_CTRL_0_BASEADDR' undeclared here (not in a function); did you mean 'XPAR_PS7_DEV_CFG_0_BASEADDR'?
+    7 | #define AUDIO_BASE                              XPAR_AUDIO_CODEC_CTRL_0_BASEADDR
+      |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/audio.h:73:66: note: in expansion of macro 'AUDIO_BASE'
+   73 |         I2S_DATA_RX_L_REG                               = 0x00 + AUDIO_BASE,
+      |                                                                  ^~~~~~~~~~
+../src/freertos_hello_world.c: In function 'main':
+../src/freertos_hello_world.c:104:19: error: 'XPAR_XIICPS_0_DEVICE_ID' undeclared (first use in this function); did you mean 'XPAR_XADCPS_0_DEVICE_ID'?
+  104 |         IicConfig(XPAR_XIICPS_0_DEVICE_ID);
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~
+      |                   XPAR_XADCPS_0_DEVICE_ID
+../src/freertos_hello_world.c:104:19: note: each undeclared identifier is reported only once for each function it appears in
+make[1]: *** [src/subdir.mk:29: src/freertos_hello_world.o] Error 1
+make: *** [makefile:34: all] Error 2
+
+13:48:27 Build Finished (took 749ms)
+
